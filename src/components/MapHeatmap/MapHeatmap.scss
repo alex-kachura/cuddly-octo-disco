@@ -1,0 +1,38 @@
+@import '../../variables.scss';
+
+.map-heatmap {
+  h3 .svg-inline--fa {
+    font-size: 21px;
+  }
+
+  &__overlay-wrapper {
+    position: relative;
+    margin-top: 20px;
+
+    .google-map {
+      width: 100%;
+      height: 393px;
+    }
+  }
+
+  &__legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-gap: 5px;
+    font-size: 12px;
+    width: 371px;
+    color: $grey;
+
+    &__gradient {
+      grid-column: 1/3;
+      margin-top: 20px;
+      height: 17px;
+      background: linear-gradient(90deg, #6667ff 0%, #CEF1AB 25%, #f8d678 59%, rgba(234, 5, 59, 0.7) 100%);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .15);
+    }
+    &__max {
+      text-align: end;
+    }
+  }
+}

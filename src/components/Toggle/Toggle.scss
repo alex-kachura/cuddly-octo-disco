@@ -1,0 +1,15 @@
+@import '../../variables.scss';
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  label {
+    display: inline-flex;
+  }
+
+  .svg-inline--fa + label, label + .svg-inline--fa {
+    margin-left: 10px;
+  }
+}

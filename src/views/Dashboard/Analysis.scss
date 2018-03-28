@@ -1,0 +1,43 @@
+@import '../../variables.scss';
+
+.analysis {
+  > h2, > h3 {
+    margin: 0 $global-padding;
+  }
+
+  &__wrapper {
+    display: flex;
+    margin-top: 30px;
+  }
+
+  &__survey {
+    flex: 0 0 $content-width;
+    display: flex;
+  }
+
+  &__notes {
+    flex-shrink: 1;
+    margin-left: 30px;
+
+    h3 {
+      margin-top: 30px;
+    }
+
+    ul {
+      font-size: 16px;
+      line-height: 25px;
+      color: $grey-dark;
+
+      li {
+        margin-top: 18px;
+      }
+    }
+  }
+
+  .icon-answer-change {
+    margin-right: 13px;
+    width: 15px;
+    height: 20px;
+    background-size: 15px 20px;
+  }
+}

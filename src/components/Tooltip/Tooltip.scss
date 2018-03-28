@@ -1,0 +1,13 @@
+@import '../../variables.scss';
+
+.__react_component_tooltip.tooltip {
+  box-shadow: 1px 1px 6px 3px rgba(70, 70, 70, .5);
+  border-radius: 0;
+  font-size: 14px;
+  text-align: left;
+  background-color: $white;
+
+  &.show {
+    opacity: 1;
+  }
+}

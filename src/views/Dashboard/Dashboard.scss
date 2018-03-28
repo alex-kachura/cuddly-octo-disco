@@ -1,0 +1,123 @@
+@import '../../variables.scss';
+
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+
+  height: 100%;
+
+  &__table-wrap {
+    flex-grow: 1;
+
+    margin: 20px;
+
+    .table {
+      width: 100%;
+      text-align: left;
+      line-height: 30px;
+
+      &, tr {
+        border: 1px solid $grey-light-2;
+      }
+
+      tr {
+        cursor: pointer;
+      }
+
+      th, td {
+        padding: 10px 20px;
+      }
+
+      td:last-child {
+        text-align: right;
+      }
+
+      a {
+        color: $blue-dark;
+        vertical-align: middle;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        .svg-inline--fa {
+          font-size: 22px;
+          padding-top: 6px;
+        }
+      }
+
+      .flex {
+        height: 100%;
+      }
+
+      &__caption {
+        display: flex;
+        justify-content: space-between;
+
+        margin: 15px 20px;
+
+        .svg-inline--fa {
+          font-size: 25px;
+
+          &.fa-map {
+            font-size: 20px;
+          }
+        }
+      }
+
+      &__head {
+        &__filters th {
+          padding: 2px 20px;
+
+          & > div {
+            display: flex;
+
+            font-size: 12px;
+            height: 64px;
+
+            .filter {
+              display: flex;
+              flex-direction: column;
+
+              & + .filter {
+                margin-left: 30px;
+              }
+
+              select {
+                font-size: 12px;
+                padding-left: 5px;
+                height: 25px;
+                color: $grey-mid;
+              }
+
+              .checkbox {
+                span > .svg-inline--fa {
+                  font-size: 16px;
+                }
+
+                & + .checkbox {
+                  margin-left: 20px;
+                }
+              }
+            }
+          }
+        }
+        &__column-names {
+          font-size: 14px;
+        }
+      }
+
+      &__body {
+        font-size: 14px;
+        color: $grey-dark;
+      }
+    }
+  }
+
+  .google-map {
+    flex-basis: 600px;
+
+    margin: 20px 20px 20px 0;
+    padding-top: 55px;
+  }
+}

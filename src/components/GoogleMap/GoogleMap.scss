@@ -1,0 +1,18 @@
+@import '../../variables.scss';
+
+.google-map {
+  display: flex;
+
+  width: 100%;
+
+  &__map {
+    flex-grow: 1;
+  }
+  &__pano {
+    z-index: 0;
+  }
+}
+
+.pac-container::after {
+  display: none;
+}

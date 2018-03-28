@@ -1,0 +1,31 @@
+@import '../../variables.scss';
+
+.fork {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 21px;
+  font-weight: bold;
+  height: 100%;
+  color: $blue-dark;
+
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -$header-height;
+    border-radius: 50%;
+    width: 200px;
+    height: 150px;
+
+    &:hover {
+      background-color: $grey-light-1;
+    }
+
+    .svg-inline--fa  {
+      font-size: 54px;
+      margin-bottom: 15px;
+    }
+  }
+}

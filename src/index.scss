@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import 'reset.scss';
+@import 'variables.scss';
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+}
+
+html, body {
+  font-family: Tahoma, sans-serif;
+  font-size: 14px;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  cursor: pointer;
+
+  &, &:hover, &:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  user-select: none;
+}
+
+#root {
+  height: 100%;
+}

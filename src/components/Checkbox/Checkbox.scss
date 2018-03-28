@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+
+.checkbox {
+  cursor: pointer;
+
+  // custom checkboxes/toggles <input><i><i>
+  input[type=checkbox] {
+    display: none;
+
+    & + .svg-inline--fa {
+      display: none;
+    }
+    &:checked {
+      & + .svg-inline--fa {
+        display: initial;
+      }
+      & + .svg-inline--fa + .svg-inline--fa {
+        display: none;
+      }
+    }
+  }
+}

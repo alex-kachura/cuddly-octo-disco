@@ -1,0 +1,33 @@
+@import '../../variables.scss';
+
+.confirmation {
+  &__container {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  &__head {
+    padding: 60px 0;
+    border-bottom: 2px solid $blue-light;
+    max-width: 720px;
+    white-space: nowrap;
+
+    &-text {
+      font-size: $big-font;
+      font-weight: bold;
+      margin-left: 30px;
+      color: $grey-dark;
+    }
+  }
+
+  &__main {
+    text-align: center;
+  }
+
+  &__button {
+    margin-top: 40px;
+    width: 100%;
+
+    @include bigWhiteButton();
+  }
+}

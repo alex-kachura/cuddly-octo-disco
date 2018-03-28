@@ -1,0 +1,70 @@
+$max-width: 1024px;
+$global-padding: 30px;
+$header-height: 80px;
+$content-width: 1230px;
+
+$black: #000000;
+$grey-dark: #242628;
+$grey-mid: #393F44;
+$grey-mid-1: #45494E;
+$grey: #8A8A8A;
+$grey-1: #b5b6b8;
+$grey-light: #e2e1e6;
+$grey-light-1: #dae1e7;
+$grey-light-2: #E9E9E9;
+$white: #ffffff;
+$blue-dark: #014282;
+$blue: #066994;
+$blue-1: #0679A8;
+$blue-bright: #0196D8;
+$blue-bright-1: #20AAE7;
+$blue-bright-2: #20a1dd;
+$blue-light: #80b3d0;
+$green-light: #B8E986;
+
+$big-font: 32px;
+
+@mixin button() {
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  outline: none;
+}
+
+@mixin defaultBlueButton() {
+  @include button();
+
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0 25px;
+  height: 30px;
+  line-height: 30px;
+  color: $white;
+  box-shadow: 0 1px 3px 0 rgba(0, 31, 88, 0.12);
+  background: linear-gradient(0deg, $blue-1 0%, $blue-bright-1 100%);
+
+  &:hover {
+    background: linear-gradient(0deg, $blue 0%, $blue-bright-2 100%);
+  }
+}
+
+@mixin bigWhiteButton() {
+  @include button();
+
+  font-size: 24px;
+  font-weight: bold;
+  padding: 13px;
+  border: 2px solid $blue-dark;
+  border-radius: 200px;
+  max-width: 380px;
+  line-height: 30px;
+  color: $blue-dark;
+  background-color: $white;
+
+  &:hover {
+    color: $white;
+    background-color: $blue-dark;
+  }
+}
