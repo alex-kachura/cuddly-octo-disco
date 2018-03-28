@@ -55,7 +55,7 @@ class Modal extends React.Component {
 
     return (
       <div className="modal" onClick={onClose}>
-        <div className={classNames('modal__window', className)} onClick={(evt) => evt.stopPropagation()}>
+        <div className={classNames("modal__window", className)} onClick={(evt) => evt.stopPropagation()}>
 
           {children}
 

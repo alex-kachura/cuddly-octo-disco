@@ -11,14 +11,24 @@ export default class Dashboard extends React.Component {
     super(...args)
 
     this.state = {
-      isShowMap: true
+      isShowMap: true,
+      isShowFlats: true,
+      isShowHouses: true
     }
 
     this.toggleMap = this.toggleMap.bind(this)
+    this.filterByType = this.filterByType.bind(this)
   }
 
   toggleMap() {
     this.setState({ isShowMap: !this.state.isShowMap })
+  }
+
+  filterByType(isFlat) {
+    this.setState(isFlat ?
+      { isShowFlats: !this.state.isShowFlats } :
+      { isShowHouses: !this.state.isShowHouses }
+    )
   }
 
   toEntryDetails = (id) => {
@@ -26,8 +36,12 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const { isShowMap } = this.state
+    const { isShowMap, isShowFlats, isShowHouses } = this.state
     const entries = Store.getValue('entries')
+      .filter(entry => (
+        (isShowFlats && entry.mieszkanie === true) ||
+        (isShowHouses && entry.mieszkanie === false)
+      ))
 
     return (
       <div className="dashboard">
@@ -46,7 +60,7 @@ export default class Dashboard extends React.Component {
             <thead className="table__head">
               <tr className="table__head__filters">
                 <th colSpan="8">
-                  <div>
+                  <div className="default-filters">
                     <label className="filter">
                       <span>Obszar</span>
                       <select>
@@ -56,24 +70,27 @@ export default class Dashboard extends React.Component {
                     <div className="filter">
                       <span>Rodzaj nieruchomości</span>
                       <div>
-                        <Checkbox
-                          label={<span><i className={`far fa-building`} /> Mieszkania</span>}
+                        <Checkbox onChange={() => this.filterByType(true)}
+                                  checked={isShowFlats}
+                                  label={<span><i
+                                    className={`far fa-building`} /> Mieszkania</span>}
                         />
-                        <Checkbox
-                          label={<span><i className={`far fa-home`} /> Domy</span>}
+                        <Checkbox onChange={() => this.filterByType(false)}
+                                  checked={isShowHouses}
+                                  label={<span><i className={`far fa-home`} /> Domy</span>}
                         />
                       </div>
                     </div>
                     <label className="filter">
                       <span>Miesięczny koszt</span>
                       <select>
-                        <option>Powyżej 500 PLN</option>
+                        <option>> 500 PLN</option>
                       </select>
                     </label>
                     <label className="filter">
                       <span>Kwota ubezpieczenia</span>
                       <select>
-                        <option>Powyżej 1000 000 PLN</option>
+                        <option>> 1 000 000 PLN</option>
                       </select>
                     </label>
                   </div>
@@ -116,7 +133,7 @@ export default class Dashboard extends React.Component {
           </table>
         </div>
 
-        {isShowMap && <GoogleMap zoom={13} />}
+        {isShowMap && <GoogleMap zoom={13} markers={entries.map(entry => entry.adres)} />}
       </div>
     )
   }

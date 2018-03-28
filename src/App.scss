@@ -105,6 +105,46 @@ a.link {
 .breadcrumbs {
   margin: 25px 0 24px $global-padding;
   color: $blue-dark;
+
+  .svg-inline--fa {
+    font-size: 16px;
+    margin-left: 12px;
+    margin-right: 8px;
+  }
+}
+
+.default-filters {
+  display: flex;
+  font-size: 12px;
+  padding: 0 20px 8px;
+  height: 64px;
+  line-height: 30px;
+
+  .filter {
+    display: flex;
+    flex-direction: column;
+
+    & + .filter {
+      margin-left: 30px;
+    }
+
+    select {
+      font-size: 12px;
+      padding-left: 5px;
+      height: 25px;
+      color: $grey-mid;
+    }
+
+    .checkbox {
+      span > .svg-inline--fa {
+        font-size: 16px;
+      }
+
+      & + .checkbox {
+        margin-left: 20px;
+      }
+    }
+  }
 }
 
 .i {

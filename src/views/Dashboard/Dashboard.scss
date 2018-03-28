@@ -46,10 +46,6 @@
         }
       }
 
-      .flex {
-        height: 100%;
-      }
-
       &__caption {
         display: flex;
         justify-content: space-between;
@@ -67,40 +63,7 @@
 
       &__head {
         &__filters th {
-          padding: 2px 20px;
-
-          & > div {
-            display: flex;
-
-            font-size: 12px;
-            height: 64px;
-
-            .filter {
-              display: flex;
-              flex-direction: column;
-
-              & + .filter {
-                margin-left: 30px;
-              }
-
-              select {
-                font-size: 12px;
-                padding-left: 5px;
-                height: 25px;
-                color: $grey-mid;
-              }
-
-              .checkbox {
-                span > .svg-inline--fa {
-                  font-size: 16px;
-                }
-
-                & + .checkbox {
-                  margin-left: 20px;
-                }
-              }
-            }
-          }
+          padding: 0;
         }
         &__column-names {
           font-size: 14px;

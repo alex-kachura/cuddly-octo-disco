@@ -8,7 +8,6 @@ import './Entry.css'
 import Store from '../../store/Store'
 import { antiTheft, offers, heat1 } from '../../mocks'
 import Modal from '../../components/Modal/Modal'
-import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
@@ -28,7 +27,8 @@ const additionalOptions = [
 const suggestions = {
   nieruchomosciKomfort: {
     suggestion: 'Zwiększenie wartości nieruchomości',
-    reason: <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
+    reason:
+      <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
     link: 'Zobacz analizę',
     type: 'upsell'
   },
@@ -48,22 +48,15 @@ export default class Entry extends React.Component {
     super(...args)
 
     this.state = {
-      id: this.props.match.params.id,
-      isAdvancedMode: true,
-      isShowMap: true,
+      isAdvancedMode: false,
       isShowAnalysisModal: false,
       isShowNeighborhoodModal: false
     }
-
-    this.toggleMap = this.toggleMap.bind(this)
-  }
-
-  toggleMap() {
-    this.setState({ isShowMap: !this.state.isShowMap })
   }
 
   render() {
-    const { id, isAdvancedMode, isShowMap } = this.state
+    const id = this.props.match.params.id
+    const { isAdvancedMode } = this.state
     const entry = find(Store.getValue('entries'), { id })
 
     if (!entry) {
@@ -77,21 +70,20 @@ export default class Entry extends React.Component {
     return (
       <div className="entry">
         <div className="breadcrumbs">
-          <a href="/dashboard" className="link">
-            Oferty klientów
-          </a> <i className="fal fa-angle-right" /> Oferta#{id}
+          <a href="/dashboard" className="link">Oferty klientów</a>
+          <i className="fal fa-angle-right" />Oferta#{id}
         </div>
 
         <div className="mode-toggle">
           <label>Tryb</label>
           <button
-            className={classNames('button-toggle', { active: !isAdvancedMode })}
+            className={classNames("button-toggle", { active: !isAdvancedMode })}
             onClick={() => this.setState({ isAdvancedMode: false })}
           >
             Domyślny
           </button>
           <button
-            className={classNames('button-toggle', { active: isAdvancedMode })}
+            className={classNames("button-toggle", { active: isAdvancedMode })}
             onClick={() => this.setState({ isAdvancedMode: true })}
           >
             Zaawansowany
@@ -100,10 +92,10 @@ export default class Entry extends React.Component {
 
         <h3>Oferta#{id}</h3>
 
-        <div className="entry__sections entry__sections--survey">
-          <div className="entry__section">
+        <div className="entry__sections">
+          <div className="entry__section entry__section--survey">
             <div className="entry__section__header">
-              <h3><i className="fal fa-clipboard-list" /> Oferta klienta</h3>
+              <h3><i className="far fa-clipboard-list" /> Oferta klienta</h3>
               <a href={`/dashboard/${id}/analysis`} className="link">Analiza ruchu</a>
             </div>
 
@@ -117,7 +109,9 @@ export default class Entry extends React.Component {
             />
           </div>
 
-          <div className="entry__section entry__section--client">
+          <div className={classNames("entry__section entry__section--client", {
+            'entry__section--client--grow': !isAdvancedMode
+          })}>
             <div>
               <div className="entry__section__header">
                 <h3><i className="far fa-user" /> Dane klienta</h3>
@@ -125,9 +119,9 @@ export default class Entry extends React.Component {
 
               <h5>{entry.name}</h5>
 
-              <label>
-                Dane osobowe
-                <div className="personal-details">
+              <div className="personal-details">
+                <h6>Dane osobowe</h6>
+                <div className="personal-details__lists">
                   <ul>
                     <li><i className="far fa-mars" /> Mężczyzna</li>
                     <li><i className="far fa-calendar" /> 37 lat</li>
@@ -140,12 +134,12 @@ export default class Entry extends React.Component {
                     <li><i className="far fa-mobile" /> Iphone X</li>
                   </ul>
                 </div>
-              </label>
+              </div>
 
-              <label>
-                Usługi PZU
+              <div className="personal-details">
+                <h6>Usługi PZU</h6>
                 <CheckboxList items={pzuServices} />
-              </label>
+              </div>
             </div>
 
             <div className="entry__section--client__footer">
@@ -157,7 +151,10 @@ export default class Entry extends React.Component {
             isAdvancedMode &&
             <div className="entry__section entry__section--address">
               <div className="entry__section__header">
-                <h3><i className="far fa-building" /> Dane nieruchomości</h3>
+                <h3><i className={classNames("far", {
+                  'fa-building': entry.mieszkanie,
+                  'fa-home': !entry.mieszkanie
+                })} /> Dane nieruchomości</h3>
                 <a className="link" href={`/dashboard/${id}/estate`}>Analiza nieruchomości</a>
               </div>
 
@@ -165,14 +162,9 @@ export default class Entry extends React.Component {
                 <div className="entry__address__map">
                   <div className="entry__address__map__top">
                     <h5>{entry.adres}</h5>
-
-                    <div className="toggle">
-                      <i className="far fa-map" />
-                      <Toggle checked={isShowMap} onChange={this.toggleMap} />
-                    </div>
                   </div>
 
-                  {isShowMap && <GoogleMap address={entry.adres} />}
+                  <GoogleMap address={entry.adres} />
                 </div>
 
                 <div className="entry__address__details">
@@ -218,12 +210,14 @@ export default class Entry extends React.Component {
                 <div className="suggestions__suggestion__text">
                   Duży współczynnik rozbić szyb w okolicy.
                 </div>
-                <a className="link" onClick={() => this.setState({ isShowNeighborhoodModal: true })}>Zobacz
+                <a className="link"
+                   onClick={() => this.setState({ isShowNeighborhoodModal: true })}>Zobacz
                   analizę okolicy</a>
               </div>
 
               <div className="suggestions__suggestion">
-                <div className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
+                <div
+                  className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
                 <div className="suggestions__suggestion__label">Propozycja</div>
                 <div className="suggestions__suggestion__text">
                   Zwiększenie wartości nieruchomości
@@ -238,7 +232,8 @@ export default class Entry extends React.Component {
               </div>
 
               <div className="suggestions__suggestion">
-                <div className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
+                <div
+                  className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
                 <div className="suggestions__suggestion__label">Propozycja</div>
                 <div className="suggestions__suggestion__text">Zwiększenie ceny o 100 PLN</div>
                 <div className="suggestions__suggestion__label">Powód</div>
@@ -249,7 +244,8 @@ export default class Entry extends React.Component {
               </div>
 
               <div className="suggestions__suggestion">
-                <div className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
+                <div
+                  className="suggestions__suggestion__icon suggestions__suggestion__icon--upsell" />
                 <div className="suggestions__suggestion__label">Propozycja</div>
                 <div className="suggestions__suggestion__text">Zwiększenie ceny o 100 PLN</div>
                 <div className="suggestions__suggestion__label">Powód</div>
@@ -279,7 +275,7 @@ export default class Entry extends React.Component {
 }
 
 const OfferCard = ({ state, card, onAnalysisClick }) =>
-  <div className={classNames('package-card', { selected: card.id === state.pakiet })}>
+  <div className={classNames("package-card", { selected: card.id === state.pakiet })}>
     <h3>Pakiet {card.label}</h3>
 
     <div className="package-price">
@@ -340,12 +336,13 @@ const CheckboxList = ({ items, state = {} }) =>
 
 const Suggestion = ({ suggestion, reason, link, type, id, onAnalysisClick }) =>
   <div className="suggestion">
-    <div className={classNames('suggestion__icon', { 'suggestion__icon--upsell': type === 'upsell' })}
-         data-tip data-event="click" data-for={id} />
+    <div
+      className={classNames("suggestion__icon", { 'suggestion__icon--upsell': type === 'upsell' })}
+      data-tip data-event="click" data-for={id} />
     {
       suggestion &&
       <ReactTooltip place="right" type="light" effect="solid" globalEventOff="click" id={id}>
-        <div className={classNames('suggestion__data', {
+        <div className={classNames("suggestion__data", {
           'suggestion__data--with-link': link,
           'suggestion__data--upsell': type === 'upsell'
         })}>
@@ -374,8 +371,8 @@ const AnalysisModal = () =>
         <div className="suggestion__data__label">Propozycja</div>
         <div className="suggestion__data__text">Zwiększenie wartości nieruchomości</div>
         <div className="suggestion__data__label">Powód</div>
-        <div className="suggestion__data__text">Inne domy w okolicy są ubezpieczone o średnio <strong>50 000
-          więcej</strong>.
+        <div className="suggestion__data__text">
+          Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.
         </div>
       </div>
 

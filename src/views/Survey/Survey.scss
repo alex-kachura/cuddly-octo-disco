@@ -1,6 +1,10 @@
 @import '../../variables.scss';
 
 .survey {
-  display: flex;
-  justify-content: center;
+  padding: 35px 0 150px;
+
+  &__title {
+    margin: 0 auto 10px;
+    width: $content-width;
+  }
 }

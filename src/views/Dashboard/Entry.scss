@@ -8,6 +8,7 @@
   .mode-toggle {
     float: right;
     display: inline-block;
+    margin-top: -10px;
     margin-right: $global-padding;
 
     label {
@@ -25,6 +26,7 @@
       height: 32px;
       padding: 5px 20px;
       color: $blue-dark;
+      border: 1px solid $grey-light-1;
       outline: none;
       cursor: pointer;
 
@@ -52,17 +54,21 @@
     padding: $global-padding;
     border: 1px solid $grey-light-2;
 
+    & + & {
+      border-left: none;
+    }
+
     &--survey {
-      flex-basis: 440px;
+      flex-basis: 432px;
     }
     &--client {
-      flex-basis: 380px;
+      flex-basis: 383px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
-      &__footer {
-        text-align: center;
+      &--grow {
+        flex-grow: 1;
       }
     }
     &--address {
@@ -76,6 +82,9 @@
     &__header {
       margin-bottom: 30px;
 
+      h3 .svg-inline--fa {
+        font-size: 23px;
+      }
       h3, a {
         display: inline-block;
       }
@@ -165,9 +174,20 @@
   }
 
   .personal-details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    margin-top: 25px;
+    line-height: 30px;
+
+    &__lists {
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 12px;
+      margin-top: 10px;
+      color: $grey-dark;
+
+      ul + ul {
+        margin-left: 35px;
+      }
+    }
   }
 
   &__address {
@@ -177,20 +197,6 @@
       flex-grow: 0;
       flex-basis: 596px;
 
-      &__top {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-
-        .svg-inline--fa {
-          font-size: 25px;
-
-          &.fa-map {
-            font-size: 20px;
-          }
-        }
-      }
-
       .google-map {
         height: 498px;
         margin: 20px 20px 20px 0;
@@ -199,11 +205,16 @@
 
     &__details {
       flex-grow: 1;
-      margin-left: 35px;
-      margin-top: 45px;
+      margin-left: $global-padding;
+      margin-top: 33px;
 
       h6 {
-        margin-top: 15px;
+        margin-top: 25px;
+        margin-bottom: 8px;
+
+        &:first-child {
+          margin-top: 0;
+        }
       }
 
       p {

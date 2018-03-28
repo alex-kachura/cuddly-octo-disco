@@ -36,7 +36,7 @@ class Survey extends React.Component {
     const initialState = {
       dom: false,
       adres: '',
-      mieszkanie: true,
+      mieszkanie: false,
       numerMieszkania: '',
       numerKarty: '',
       pzuAuto: false,
@@ -164,13 +164,13 @@ class Survey extends React.Component {
   }
 
   submitSurvey() {
-    const entries = Store.getValue('entries')
+    const entries = [...Store.getValue('entries')]
 
     entries.push({ ...this.state, id: uniqueId() })
 
-    Store.setValue('entries', entries)
-    Store.setValue('mouseHistory', this.mouseHistory)
-    Store.setValue('mousePath', this.mousePath)
+    // Store.setValue('entries', entries)
+    // Store.setValue('mouseHistory', this.mouseHistory)
+    // Store.setValue('mousePath', this.mousePath)
 
     this.props.onComplete()
   }
@@ -230,116 +230,115 @@ class Survey extends React.Component {
     const { mieszkanie, pakiet, adres, numerMieszkania, numerKarty, pzuAuto, stale, cesja } = this.state
 
     return (
-      <div className="survey-component">
-        {!heatmap && <h3>Wycena nieruchomości</h3>}
-
-        <div ref={el => this.surveyEl = el}>
-          <div className="evaluation">
-            <div className="address-row">
-              <div className="input-type">
-                <label>Typ</label><br />
-                <div className="toggle">
-                  <i className="far fa-home" />
-                  <Toggle name="mieszkanie" checked={mieszkanie} onChange={this.onAnswerChange} />
-                  <i className="far fa-building" />
-                </div>
+      <div className="survey-component" ref={el => this.surveyEl = el}>
+        <div className="evaluation">
+          <div className="address-row">
+            <div className="input-type">
+              <label>Typ</label><br />
+              <div className="toggle">
+                <i className="far fa-home" />
+                <Toggle name="mieszkanie" checked={mieszkanie} onChange={this.onAnswerChange} />
+                <i className="far fa-building" />
               </div>
-              <InputField
-                className="input-address"
-                label="Adres *"
-                id="address"
-                placeholder="Wpisz adres"
-                name="adres"
-                value={adres}
-                onChange={this.onAnswerChange}
-              />
-              {
-                mieszkanie &&
-                <InputField
-                  className="input-flat"
-                  label="Nr mieszkania"
-                  type="number"
-                  placeholder="np. 12"
-                  name="numerMieszkania"
-                  value={numerMieszkania} onChange={this.onAnswerChange}
-                />
-              }
             </div>
-
-            <GoogleMap address={adres} onMapClick={this.setAddress} pano={true} />
-
-            <div className="additional-row">
+            <InputField
+              className="input-address"
+              label="Adres *"
+              id="address"
+              placeholder="Wpisz adres"
+              name="adres"
+              value={adres}
+              onChange={this.onAnswerChange}
+            />
+            {
+              mieszkanie &&
               <InputField
-                className="input-karta"
-                label="Karta zniżkowa PZU (opcjonalnie)"
+                className="input-flat"
+                label="Nr mieszkania"
                 type="number"
-                name="numerKarty"
-                placeholder="Numer karty"
-                value={numerKarty} onChange={this.onAnswerChange}
+                placeholder="np. 12"
+                name="numerMieszkania"
+                value={numerMieszkania} onChange={this.onAnswerChange}
               />
-              <Checkbox
-                label="Mam Ubezpieczenie PZU AUTO"
-                name="pzuAuto"
-                checked={pzuAuto}
-                onChange={this.onAnswerChange}
-              />
-              <Checkbox label="Stałe elementy" name="stale" checked={stale}
-                        onChange={this.onAnswerChange} />
-              <Checkbox label="Cesja" name="cesja" checked={cesja} onChange={this.onAnswerChange} />
-            </div>
-
-            <div className="anti-theft">
-              <h6>Posiadane zabezpieczenia przeciwkradzieżowe</h6>
-              <CheckboxList items={antiTheft} state={this.state} onChange={this.onAnswerChange} />
-            </div>
+            }
           </div>
 
-          {
-            adres &&
-            <div className="offer">
-              <h3>Oferta dla Ciebie</h3>
-              <h6>Możesz przesuwać suwak aby nasz system zmodyfikował ofertę dla Ciebie</h6>
+          <GoogleMap address={adres} onMapClick={this.setAddress} pano />
 
-              <div className="package-row">
-                <OfferCard
-                  state={this.state}
-                  card={offers[0]}
-                  onClick={this.selectCard}
-                  onAnswerChange={this.onAnswerChange}
-                />
-                <OfferCard
-                  state={this.state}
-                  card={offers[1]}
-                  onClick={this.selectCard}
-                  onAnswerChange={this.onAnswerChange}
-                />
-              </div>
+          <div className="additional-row">
+            <InputField
+              className="input-karta"
+              label="Karta zniżkowa PZU (opcjonalnie)"
+              type="number"
+              name="numerKarty"
+              placeholder="Numer karty"
+              value={numerKarty} onChange={this.onAnswerChange}
+            />
+            <Checkbox
+              label="Mam Ubezpieczenie PZU AUTO"
+              name="pzuAuto"
+              checked={pzuAuto}
+              onChange={this.onAnswerChange}
+            />
+            <Checkbox label="Stałe elementy" name="stale" checked={stale}
+                      onChange={this.onAnswerChange} />
+            <Checkbox label="Cesja" name="cesja" checked={cesja} onChange={this.onAnswerChange} />
+          </div>
 
-              <div className="slider-row">
-                <Slider
-                  selectedOffer={pakiet}
-                  offer={offers[0]}
-                  state={this.state}
-                  onChange={this.onAnswerChange}
-                />
-                <Slider
-                  showMax
-                  selectedOffer={pakiet}
-                  offer={offers[1]}
-                  state={this.state}
-                  onChange={this.onAnswerChange}
-                />
-              </div>
-            </div>
-          }
-
-          {
-            adres &&
-            <button className="button-default submit" onClick={this.submitSurvey}>Kupuję</button>
-          }
-
-          {heatmap && <HeatmapOverlay max={config.heatMapMaxValue} heat={mouseHistory} path={mousePath} />}
+          <div className="anti-theft">
+            <h6>Posiadane zabezpieczenia przeciwkradzieżowe</h6>
+            <CheckboxList items={antiTheft} state={this.state} onChange={this.onAnswerChange} />
+          </div>
         </div>
+
+        {
+          (adres || heatmap) &&
+          <div className="offer">
+            <h3>Oferta dla Ciebie</h3>
+            <h6>Możesz przesuwać suwak aby nasz system zmodyfikował ofertę dla Ciebie</h6>
+
+            <div className="package-row">
+              <OfferCard
+                state={this.state}
+                card={offers[0]}
+                onClick={this.selectCard}
+                onAnswerChange={this.onAnswerChange}
+              />
+              <OfferCard
+                state={this.state}
+                card={offers[1]}
+                onClick={this.selectCard}
+                onAnswerChange={this.onAnswerChange}
+              />
+            </div>
+
+            <div className="slider-row">
+              <Slider
+                selectedOffer={pakiet}
+                offer={offers[0]}
+                state={this.state}
+                onChange={this.onAnswerChange}
+              />
+              <Slider
+                showMax
+                selectedOffer={pakiet}
+                offer={offers[1]}
+                state={this.state}
+                onChange={this.onAnswerChange}
+              />
+            </div>
+          </div>
+        }
+
+        {
+          (adres || heatmap) &&
+          <button className="button-default submit" onClick={this.submitSurvey}>Kupuję</button>
+        }
+
+        {
+          heatmap &&
+          <HeatmapOverlay max={config.heatMapMaxValue} heat={mouseHistory} path={mousePath} />
+        }
       </div>
     )
   }
@@ -367,13 +366,13 @@ const Slider = ({ showMax, selectedOffer, offer, state, onChange }) => {
 }
 
 const InputField = ({ className, label, ...rest }) =>
-  <div className={classNames('input-field', className)}>
+  <div className={classNames("input-field", className)}>
     <label>{label}</label>
     <input {...rest} />
   </div>
 
 const OfferCard = ({ state, card, onClick, onAnswerChange }) =>
-  <div className={classNames('package-card', { selected: card.id === state.pakiet })}
+  <div className={classNames("package-card", { selected: card.id === state.pakiet })}
        onClick={() => onClick(card.id)}>
     <h2>Pakiet {card.label}</h2>
 

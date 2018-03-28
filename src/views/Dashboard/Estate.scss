@@ -14,13 +14,17 @@
   }
 
   &__content {
-    margin: 35px $global-padding 0;
+    margin: 20px $global-padding 0;
 
+    &__filters {
+      border: 1px solid $grey-light-2;
+    }
     &__maps {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       grid-gap: 30px;
+      margin-top: 20px;
     }
   }
 
