@@ -5,6 +5,7 @@ import Store from '../../store/Store'
 import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
+import { offers } from '../../mocks'
 
 class Dashboard extends React.Component {
   constructor(...args) {
@@ -120,7 +121,7 @@ class Dashboard extends React.Component {
                           <span><i className="far fa-home" /> Dom</span>
                       }
                     </td>
-                    <td>{entry.kosztMiesieczny}</td>
+                    <td>{entry[`suwak.${offers[entry.pakiet].label}`]} PLN</td>
                     <td>{entry.wartoscUbezpieczenia}</td>
                     <td>{entry.name}</td>
                     <td>{entry.miasto}</td>

@@ -9,18 +9,17 @@ import find from 'lodash/find'
 import './Survey.css'
 import Store from '../../store/Store'
 import config from '../../config'
-import { antiTheft, additionalSecurity, offers } from '../../mocks'
 import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import HeatmapOverlay from '../HeatmapOverlay/HeatmapOverlay'
+import { antiTheft, additionalSecurity, offers } from '../../mocks'
 
 class Survey extends React.Component {
   constructor(...args) {
     super(...args)
 
     const initialState = {
-      dom: false,
       adres: '',
       mieszkanie: false,
       numerMieszkania: '',
@@ -28,8 +27,8 @@ class Survey extends React.Component {
       pzuAuto: false,
       stale: false,
       cesja: false,
-      suwakKomfort: offers[0].price,
-      suwakPremium: offers[1].price,
+      'suwak.Komfort': offers[0].price,
+      'suwak.Premium': offers[1].price,
       pakiet: offers[0].id
     }
 
@@ -42,7 +41,7 @@ class Survey extends React.Component {
         initialState[insurance.name] = insurance.amount
       })
       additionalSecurity.forEach((additional, index) => {
-        initialState[`${additional.name}${offer.label}`] = index < additionalSecurity.length / 2
+        initialState[`${additional.name}.${offer.label}`] = index < 1
       })
     })
 
@@ -101,41 +100,41 @@ class Survey extends React.Component {
     const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
     const { label, min, max } = offer
     const delta = (max - min) / 6
-    const stale = find(offer.insurances, { name: `stale${label}` })
-    const dodatkowa = find(offer.insurances, { name: `dodatkowa${label}` })
+    const stale = find(offer.insurances, { name: `stale.${label}` })
+    const dodatkowa = find(offer.insurances, { name: `dodatkowa.${label}` })
     const additionalItems = {
-      [`dodatkowa.pomoc${label}`]: true,
-      [`dodatkowa.stluczenie${label}`]: true,
-      [`dodatkowa.oc${label}`]: true,
-      [`dodatkowa.prawna${label}`]: true,
-      [`stale${label}`]: stale.amount,
-      [`dodatkowa${label}`]: dodatkowa.amount,
-      [`suwak${label}`]: max
+      [`dodatkowa.pomoc.${label}`]: true,
+      [`dodatkowa.stluczenie.${label}`]: true,
+      [`dodatkowa.oc.${label}`]: true,
+      [`dodatkowa.prawna.${label}`]: true,
+      [`stale.${label}`]: stale.amount,
+      [`dodatkowa.${label}`]: dodatkowa.amount,
+      [`suwak.${label}`]: max
     }
 
     if (value < min + delta * 6) {
-      additionalItems[`dodatkowa.prawna${label}`] = false
-      additionalItems[`suwak${label}`] = min + delta * 5
+      additionalItems[`dodatkowa.prawna.${label}`] = false
+      additionalItems[`suwak.${label}`] = min + delta * 5
     }
     if (value <= min + delta * 5) {
-      additionalItems[`dodatkowa.oc${label}`] = false
-      additionalItems[`suwak${label}`] = min + delta * 4
+      additionalItems[`dodatkowa.oc.${label}`] = false
+      additionalItems[`suwak.${label}`] = min + delta * 4
     }
     if (value <= min + delta * 4) {
-      additionalItems[`dodatkowa.stluczenie${label}`] = false
-      additionalItems[`suwak${label}`] = min + delta * 3
+      additionalItems[`dodatkowa.stluczenie.${label}`] = false
+      additionalItems[`suwak.${label}`] = min + delta * 3
     }
     if (value <= min + delta * 3) {
-      additionalItems[`dodatkowa.pomoc${label}`] = false
-      additionalItems[`suwak${label}`] = min + delta * 2
+      additionalItems[`dodatkowa.pomoc.${label}`] = false
+      additionalItems[`suwak.${label}`] = min + delta * 2
     }
     if (value <= min + delta * 2) {
-      additionalItems[`dodatkowa${label}`] = label === 'Komfort' ? '2 500 PLN' : '5 000 PLN'
-      additionalItems[`suwak${label}`] = min + delta
+      additionalItems[`dodatkowa.${label}`] = label === 'Komfort' ? '2 500 PLN' : '5 000 PLN'
+      additionalItems[`suwak.${label}`] = min + delta
     }
     if (value <= min + delta) {
-      additionalItems[`stale${label}`] = '2 500 PLN'
-      additionalItems[`suwak${label}`] = min
+      additionalItems[`stale.${label}`] = '2 500 PLN'
+      additionalItems[`suwak.${label}`] = min
     }
 
     return additionalItems;
@@ -145,30 +144,30 @@ class Survey extends React.Component {
     const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
     const { label, min, max } = offer
     const delta = (max - min) / 6
-    const stale = find(offer.insurances, { name: `stale${label}` })
-    const dodatkowa = find(offer.insurances, { name: `dodatkowa${label}` })
+    const stale = find(offer.insurances, { name: `stale.${label}` })
+    const dodatkowa = find(offer.insurances, { name: `dodatkowa.${label}` })
     let value = min
 
-    if (answers[`stale${label}`] === stale.amount) value += delta
-    if (answers[`dodatkowa${label}`] === dodatkowa.amount) value += delta
-    if (answers[`dodatkowa.pomoc${label}`]) value += delta
-    if (answers[`dodatkowa.stluczenie${label}`]) value += delta
-    if (answers[`dodatkowa.oc${label}`]) value += delta
-    if (answers[`dodatkowa.prawna${label}`]) value += delta
+    if (answers[`stale.${label}`] === stale.amount) value += delta
+    if (answers[`dodatkowa.${label}`] === dodatkowa.amount) value += delta
+    if (answers[`dodatkowa.pomoc.${label}`]) value += delta
+    if (answers[`dodatkowa.stluczenie.${label}`]) value += delta
+    if (answers[`dodatkowa.oc.${label}`]) value += delta
+    if (answers[`dodatkowa.prawna.${label}`]) value += delta
 
     return ({
-      [`suwak${label}`]: value
+      [`suwak.${label}`]: value
     })
   }
 
   submitSurvey() {
     const entries = [...Store.getValue('entries')]
 
-    entries.push({ ...this.state, id: uniqueId() })
+    entries.push({ ...this.state, id: +uniqueId() })
 
-    // Store.setValue('entries', entries)
-    // Store.setValue('mouseHistory', this.mouseHistory)
-    // Store.setValue('mousePath', this.mousePath)
+    Store.setValue('entries', entries)
+    Store.setValue('mouseHistory', this.mouseHistory)
+    Store.setValue('mousePath', this.mousePath)
 
     this.props.onComplete()
   }
@@ -298,13 +297,13 @@ class Survey extends React.Component {
             <div className="package-row">
               <OfferCard
                 state={this.state}
-                card={offers[0]}
+                offer={offers[0]}
                 onClick={this.selectCard}
                 onAnswerChange={this.onAnswerChange}
               />
               <OfferCard
                 state={this.state}
-                card={offers[1]}
+                offer={offers[1]}
                 onClick={this.selectCard}
                 onAnswerChange={this.onAnswerChange}
               />
@@ -313,14 +312,14 @@ class Survey extends React.Component {
             <div className="slider-row">
               <Slider
                 selectedOffer={pakiet}
-                offer={offers[0]}
+                offerId={0}
                 state={this.state}
                 onChange={this.onAnswerChange}
               />
               <Slider
                 showMax
                 selectedOffer={pakiet}
-                offer={offers[1]}
+                offerId={1}
                 state={this.state}
                 onChange={this.onAnswerChange}
               />
@@ -351,14 +350,15 @@ Survey.propTypes = {
 Survey.defaultProps = {
   track: true,
   heatmap: false,
-  prefill: true,
+  prefill: false,
   onComplete: noop
 }
 
 export default Survey
 
-const Slider = ({ showMax, selectedOffer, offer, state, onChange }) => {
-  const name = `suwak${offer.label}`;
+const Slider = ({ showMax, selectedOffer, offerId, state, onChange }) => {
+  const offer = offers[offerId];
+  const name = `suwak.${offer.label}`;
   return (
     <div className="slider">
       <h3>{offer.label}</h3>
@@ -384,22 +384,22 @@ const InputField = ({ className, label, ...rest }) =>
     <input {...rest} />
   </div>
 
-const OfferCard = ({ state, card, onClick, onAnswerChange }) =>
-  <div className={classNames("package-card", { selected: card.id === state.pakiet })}
-       onClick={() => onClick(card.id)}>
-    <h2>Pakiet {card.label}</h2>
+const OfferCard = ({ state, offer, onClick, onAnswerChange }) =>
+  <div className={classNames("package-card", { selected: offer.id === state.pakiet })}
+       onClick={() => onClick(offer.id)}>
+    <h2>Pakiet {offer.label}</h2>
 
     <div className="package-price">
       <i className="far fa-money-bill" />
       <div>
-        <h2>{card.price} PLN</h2>
+        <h2>{offer.price} PLN</h2>
         Za rok
       </div>
     </div>
 
     <div className="price-details">
       {
-        card.insurances
+        offer.insurances
           .filter(({ price }) => !!price)
           .map(({ name, label, price }) =>
             <label key={name}>{label}<span>{price}</span></label>
@@ -409,7 +409,7 @@ const OfferCard = ({ state, card, onClick, onAnswerChange }) =>
 
     <div className="insurance-items">
       {
-        card.insurances.map(insurance =>
+        offer.insurances.map(insurance =>
           <InsuranceItem key={insurance.name} {...insurance} state={state}
                          onAnswerChange={onAnswerChange} />
         )

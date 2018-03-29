@@ -6,7 +6,7 @@ import Store from '../../store/Store'
 import Survey from '../../components/Survey/Survey'
 
 const Analysis = ({ match }) => {
-  const id = match.params.id
+  const id = +match.params.id
   const entry = find(Store.getValue('entries'), { id })
 
   if (!entry) {

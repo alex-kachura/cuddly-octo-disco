@@ -2,77 +2,64 @@ import React from 'react'
 import cloneDeep from "lodash/cloneDeep";
 
 export const entries = [{
-  id: '58394',
+  id: 58394,
   name: 'Jan Kowalski',
-  kosztMiesieczny: '400 PLN',
+  pakiet: 0,
   wartoscUbezpieczenia: '2 000 000 PLN',
   miasto: 'Warszawa',
   mieszkanie: true,
   adres: 'Wilcza 14, Warszawa, Poland',
   numerMieszkania: 11,
-  numerKarty: 1422300796,
+  numerKarty: 59483949,
   pzuAuto: true,
-  stale: true,
-  cesja: true,
-  kradziezDrzwi: true,
-  kradziezOkna: true,
-  kradziezAlarm: true,
-  kradziezMonitoring: true,
-  nieruchomosciKomfort: '750 000 PLN',
-  ruchomosciKomfort: '10 000 PLN',
-  staleKomfort: '5 000 PLN',
-  dodatkowaKomfort: '5 000 PLN',
-  nieruchomosciPremium: '750 000 PLN',
-  ruchomosciPremium: '10 000 PLN',
-  stalePremium: '5 000 PLN',
-  dodatkowaPremium: '10 000 PLN',
-  dodatkowaPomocKomfort: true,
-  dodatkowaStluczenieKomfort: true,
-  dodatkowaOcKomfort: true,
-  dodatkowaPrawnaKomfort: false,
-  dodatkowaPomocPremium: true,
-  dodatkowaStluczeniePremium: true,
-  dodatkowaOcPremium: true,
-  dodatkowaPrawnaPremium: true,
-  suwakKomfort: 400,
-  suwakPremium: 600,
-  pakiet: 1
+  stale: false,
+  cesja: false,
+  'kradziez.drzwi': true,
+  'kradziez.okna': true,
+  'kradziez.alarm': true,
+  'kradziez.monitoring': true,
+  'nieruchomosci.Komfort': '750 000 PLN',
+  'ruchomosci.Komfort': '10 000 PLN',
+  'stale.Komfort': '5 000 PLN',
+  'dodatkowa.Komfort': '5 000 PLN',
+  'dodatkowa.pomoc.Komfort': true,
+  'dodatkowa.stluczenie.Komfort': true,
+  'dodatkowa.oc.Komfort': false,
+  'dodatkowa.prawna.Komfort': false,
+  'suwak.Komfort': 360,
 }, {
-  id: '58395',
+  id: 58395,
   name: 'Adrian Owczarczyk',
-  kosztMiesieczny: '800 PLN',
+  pakiet: 1,
   wartoscUbezpieczenia: '7 000 000 PLN',
   miasto: 'Warszawa',
   mieszkanie: false,
   adres: 'Hoża 69, Warszawa, Poland',
-  numerKarty: 1422700796,
+  numerKarty: 59483949,
   pzuAuto: true,
-  stale: true,
-  cesja: true,
-  kradziezDrzwi: true,
-  kradziezOkna: true,
-  kradziezAlarm: true,
-  kradziezMonitoring: true,
-  nieruchomosciKomfort: '750 000 PLN',
-  ruchomosciKomfort: '10 000 PLN',
-  staleKomfort: '5 000 PLN',
-  dodatkowaKomfort: '5 000 PLN',
-  nieruchomosciPremium: '750 000 PLN',
-  ruchomosciPremium: '10 000 PLN',
-  stalePremium: '5 000 PLN',
-  dodatkowaPremium: '10 000 PLN',
-  dodatkowaPomocKomfort: true,
-  dodatkowaStluczenieKomfort: true,
-  dodatkowaOcKomfort: true,
-  dodatkowaPrawnaKomfort: false,
-  dodatkowaPomocPremium: true,
-  dodatkowaStluczeniePremium: true,
-  dodatkowaOcPremium: true,
-  dodatkowaPrawnaPremium: true,
-  suwakKomfort: 400,
-  suwakPremium: 600,
-  pakiet: 0
+  stale: false,
+  cesja: false,
+  'kradziez.drzwi': true,
+  'kradziez.okna': true,
+  'kradziez.alarm': true,
+  'kradziez.monitoring': true,
+  'nieruchomosci.Premium': '750 000 PLN',
+  'ruchomosci.Premium': '10 000 PLN',
+  'stale.Premium': '5 000 PLN',
+  'dodatkowa.Premium': '10 000 PLN',
+  'dodatkowa.pomoc.Premium': true,
+  'dodatkowa.stluczenie.Premium': true,
+  'dodatkowa.oc.Premium': true,
+  'dodatkowa.prawna.Premium': true,
+  'suwak.Premium': 600
 }]
+
+export const additionalOptions = [
+  { name: 'numerKarty', label: 'Karta zniżkowa nr 59483949', value: true },
+  { name: 'pzuAuto', label: 'Ubezpieczenie PZU AUTO', value: true },
+  { name: 'stale', label: 'Stale elementy' },
+  { name: 'cesja', label: 'Cesja' }
+]
 
 export const antiTheft = [
   { name: 'kradziez.drzwi', icon: 'fa-lock-alt', label: 'Drzwi lub zamki atestowane' },
@@ -96,14 +83,14 @@ export const offers = [
     price: 330,
     max: 420,
     insurances: [
-      { name: 'nieruchomosciKomfort', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
-      { name: 'ruchomosciKomfort', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
-      { name: 'staleKomfort', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
+      { name: 'nieruchomosci.Komfort', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
+      { name: 'ruchomosci.Komfort', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
+      { name: 'stale.Komfort', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {
-        name: 'dodatkowaKomfort', label: 'Dodatkowa ochrona', amount: '5 000 PLN', amountAlt: '2 500 PLN',
+        name: 'dodatkowa.Komfort', label: 'Dodatkowa ochrona', amount: '5 000 PLN', amountAlt: '2 500 PLN',
         items: cloneDeep(additionalSecurity).map(i => ({
           ...i,
-          name: i.name += 'Komfort'
+          name: i.name += '.Komfort'
         }))
       },
     ]
@@ -111,18 +98,18 @@ export const offers = [
   {
     id: 1,
     label: 'Premium',
-    min: 480,
-    price: 540,
-    max: 600,
+    min: 430,
+    price: 520,
+    max: 610,
     insurances: [
-      { name: 'nieruchomosciPremium', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
-      { name: 'ruchomosciPremium', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
-      { name: 'stalePremium', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
+      { name: 'nieruchomosci.Premium', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
+      { name: 'ruchomosci.Premium', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
+      { name: 'stale.Premium', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {
-        name: 'dodatkowaPremium', label: 'Dodatkowa ochrona', amount: '10 000 PLN', amountAlt: '5 000 PLN',
+        name: 'dodatkowa.Premium', label: 'Dodatkowa ochrona', amount: '10 000 PLN', amountAlt: '5 000 PLN',
         items: cloneDeep(additionalSecurity).map(i => ({
           ...i,
-          name: i.name += 'Premium'
+          name: i.name += '.Premium'
         }))
       },
     ]
@@ -136,27 +123,36 @@ export const pzuServices = [
   { name: 'ocZycie', icon: 'fa-user', label: 'OC na życie' }
 ]
 
-export const additionalOptions = [
-  { name: 'a', label: 'Karta zniżkowa nr 59483949', value: true },
-  { name: 'b', label: 'Ubezpieczenie PZU AUTO', value: true },
-  { name: 'c', label: 'Stale element' },
-  { name: 'd', label: 'Cesja' }
-]
-
 export const suggestions = {
-  nieruchomosciKomfort: {
+  'nieruchomosci.Komfort': {
     suggestion: 'Zwiększenie wartości nieruchomości',
     reason:
       <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
     link: 'Zobacz analizę',
     type: 'upsell'
   },
-  ruchomosciKomfort: {
+  'ruchomosci.Komfort': {
+    suggestion: 'Zwiększenie wartości ruchomości domowych',
+    reason: 'Klient posiada laptop Macbook Pro 2017 o wartości rynkowej 10 000 PLN',
+    type: 'upsell'
+  },
+  'dodatkowa.oc.Komfort': {
+    suggestion: 'Powiększenie oferty o OC',
+    reason: 'Klient nie posiada OC'
+  },
+  'nieruchomosci.Premium': {
+    suggestion: 'Zwiększenie wartości nieruchomości',
+    reason:
+      <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
+    link: 'Zobacz analizę',
+    type: 'upsell'
+  },
+  'ruchomosci.Premium': {
     suggestion: 'Zwiększenie wartości ruchomości domowych',
     reason: 'Klient posia laptop Macbook Pro 2017 o wartości rynkowej 10 000 PLN',
     type: 'upsell'
   },
-  dodatkowaOcKomfort: {
+  'dodatkowa.oc.Premium': {
     suggestion: 'Powiększenie oferty o OC',
     reason: 'Klient nie posiada OC'
   }

@@ -2,13 +2,13 @@ import React from 'react'
 import find from 'lodash/find'
 
 import './Estate.css'
-import { heat1 } from '../../mocks'
 import Store from '../../store/Store'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
 import Checkbox from '../../components/Checkbox/Checkbox'
+import { heat1 } from '../../mocks'
 
 const Estate = ({ match }) => {
-  const id = match.params.id
+  const id = +match.params.id
   const entry = find(Store.getValue('entries'), { id })
 
   if (!entry) {

@@ -8,11 +8,11 @@ import isEmpty from 'lodash/isEmpty'
 
 import './Entry.css'
 import Store from '../../store/Store'
-import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heat1 } from '../../mocks'
 import Modal from '../../components/Modal/Modal'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
+import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heat1 } from '../../mocks'
 
 class Entry extends React.Component {
   constructor(...args) {
@@ -37,9 +37,10 @@ class Entry extends React.Component {
   }
 
   render() {
-    const id = this.props.match.params.id
+    const id = +this.props.match.params.id
     const { isAdvancedMode } = this.state
     const entry = find(Store.getValue('entries'), { id })
+    const offer = offers[entry.pakiet]
 
     if (!entry) {
       return (
@@ -82,11 +83,8 @@ class Entry extends React.Component {
             </div>
 
             <OfferCard
-              state={{
-                dodatkowaPomocKomfort: true,
-                dodatkowaStluczenieKomfort: true
-              }}
-              card={offers[0]}
+              state={{ ...entry }}
+              offer={offer}
               onAnalysisClick={() => this.setState({ isShowAnalysisModal: true })}
             />
           </div>
@@ -160,15 +158,10 @@ class Entry extends React.Component {
                   </p>
 
                   <h6>Zabezpieczenia przeciwkradzieżowe</h6>
-                  <CheckboxList items={antiTheft} state={{
-                    kradziezDrzwi: true,
-                    kradziezOkna: true,
-                    kradziezAlarm: true,
-                    kradziezMonitoring: true
-                  }} />
+                  <CheckboxList items={antiTheft} state={{ ...entry }} />
 
                   <h6>Dodatkowe opcje</h6>
-                  <CheckboxList items={additionalOptions} />
+                  <CheckboxList items={additionalOptions} state={{ ...entry }} />
                 </div>
               </div>
             </div>
@@ -262,18 +255,18 @@ Entry.propTypes = {
 
 export default withCookies(Entry)
 
-const OfferCard = ({ state, card, onAnalysisClick }) =>
-  <div className={classNames("package-card", { selected: card.id === state.pakiet })}>
-    <h3>Pakiet {card.label}</h3>
+const OfferCard = ({ state, offer, onAnalysisClick }) =>
+  <div className={classNames("package-card", { selected: offer.id === state.pakiet })}>
+    <h3>Pakiet {offer.label}</h3>
 
     <div className="package-price">
-      <h4>{card.price} PLN</h4>
+      <h4>{state[`suwak.${offer.label}`]} PLN</h4>
       Za rok
     </div>
 
     <div className="price-details">
       {
-        card.insurances
+        offer.insurances
           .filter(({ price }) => !!price)
           .map(({ name, label, price }) =>
             <label key={name}>{label}<span>{price}</span></label>
@@ -283,7 +276,7 @@ const OfferCard = ({ state, card, onAnalysisClick }) =>
 
     <div className="insurance-items">
       {
-        card.insurances.map(insurance =>
+        offer.insurances.map(insurance =>
           <InsuranceItem
             key={insurance.name}
             id={insurance.name}
