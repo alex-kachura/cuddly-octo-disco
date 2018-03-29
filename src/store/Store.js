@@ -1,31 +1,35 @@
 import { get, set } from 'lodash'
 
-const store = { values: {} }
+const store = {}
 
 window.store = store
 
 function reset() {
-  store.values = {
-    userInfo: {},
-    flatInfo: {},
-    surveyQuestions: {},
+  console.log('reset')
+
+  Object.assign(store, {
     entries: [],
-    surveyAnalysis: [],
     mouseHistory: [],
     mousePath: []
-  }
+  })
 }
 
 function getValue(fieldPath) {
-  return get(store.values, fieldPath)
+  console.log('get', fieldPath)
+
+  return get(store, fieldPath)
 }
 
 function setValue(fieldPath, value) {
-  return set(store.values, fieldPath, value)
+  console.log('set', fieldPath, value)
+
+  return set(store, fieldPath, value)
 }
 
 function getStore() {
-  return store.values
+  console.log('getStore')
+
+  return store
 }
 
 export default {

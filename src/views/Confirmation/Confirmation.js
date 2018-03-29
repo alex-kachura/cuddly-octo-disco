@@ -12,7 +12,9 @@ const Confirmation = ({ history }) => (
         </div>
       </div>
       <div className="confirmation__main">
-        <button className="confirmation__button" onClick={() => history.push('/')}> Na główną</button>
+        <button className="confirmation__button"
+                onClick={() => {history.push('/')}}>Na główną
+        </button>
       </div>
     </div>
   </div>

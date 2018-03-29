@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import './GoogleMap.css'
@@ -218,7 +218,7 @@ const icons = {
   home: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAA1UlEQVR42u3Vuw3CMBAGYOeQgDEo6NjCpmEA9yzCy8cELECfDhrGA47ECsIvlORc+ZdcJLb8Kb5cIvoGJB5gjUeRM4RW0jxpZMO/0Ww4ARbLhrso3iqFD1bch650PV1uLjM2PITaeRYclDnFUBY8hbLgKZQFB4UmhvbBqfdZ0RTOikZxdd4H0G580IFZbK/zdj8XB2nQ9wkUI8Xu93vs9LS77HD7pje4Mnd2+F1zp720rifcMBneRdwwXRfYWZT6PYbapMCjwg3Q3S/wADhdy39rX2CbF0PwQrAUEJhyAAAAAElFTkSuQmCC'
 }
 
-class GoogleMap extends Component {
+class GoogleMap extends React.Component {
   constructor(...args) {
     super(...args)
 

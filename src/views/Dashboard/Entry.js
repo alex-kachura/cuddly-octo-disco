@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 import find from 'lodash/find'
 import classNames from 'classnames'
@@ -9,12 +9,13 @@ import isEmpty from 'lodash/isEmpty'
 import './Entry.css'
 import Store from '../../store/Store'
 import Modal from '../../components/Modal/Modal'
+import NotFound from '../../components/NotFound/NotFound'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
 import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heat1 } from '../../mocks'
 
-class Entry extends React.Component {
+class Entry extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
@@ -37,23 +38,22 @@ class Entry extends React.Component {
   }
 
   render() {
-    const id = +this.props.match.params.id
     const { isAdvancedMode } = this.state
+    const { match, history } = this.props
+    const id = match.params.id
     const entry = find(Store.getValue('entries'), { id })
-    const offer = offers[entry.pakiet]
 
-    if (!entry) {
-      return (
-        <div className="entry">
-          <h2>Entry {id} not found</h2>
-        </div>
-      )
+    if (isEmpty(entry)) {
+      return <NotFound id={id} />
     }
+
+    const offer = offers[entry.pakiet]
 
     return (
       <div className="entry">
         <div className="breadcrumbs">
-          <a href="/dashboard" className="link">Oferty klientów</a>
+          <a className="link"
+             onClick={() => history.push('/dashboard')}>Oferty klientów</a>
           <i className="fal fa-angle-right" />Oferta#{id}
         </div>
 
@@ -79,7 +79,8 @@ class Entry extends React.Component {
           <div className="entry__section entry__section--survey">
             <div className="entry__section__header">
               <h3><i className="far fa-clipboard-list" /> Oferta klienta</h3>
-              <a href={`/dashboard/${id}/analysis`} className="link">Analiza zachowania</a>
+              <a className="link"
+                 onClick={() => history.push(`/dashboard/${id}/analysis`)}>Analiza zachowania</a>
             </div>
 
             <OfferCard
@@ -135,7 +136,8 @@ class Entry extends React.Component {
                   'fa-building': entry.mieszkanie,
                   'fa-home': !entry.mieszkanie
                 })} /> Dane nieruchomości</h3>
-                <a className="link" href={`/dashboard/${id}/estate`}>Analiza nieruchomości</a>
+                <a className="link"
+                   onClick={() => history.push(`/dashboard/${id}/estate`)}>Analiza nieruchomości</a>
               </div>
 
               <div className="entry__address">
@@ -215,7 +217,10 @@ class Entry extends React.Component {
                 <div className="suggestions__suggestion__text">
                   Klient wahał się pzy wyborze ceny końcowej.
                 </div>
-                <a className="link" href={`/dashboard/${id}/analysis`}>Zobacz analizę zachowania</a>
+                <a className="link"
+                   onClick={() => history.push(`/dashboard/${id}/analysis`)}>
+                  Zobacz analizę zachowania
+                </a>
               </div>
 
               <div className="suggestions__suggestion">

@@ -2,11 +2,13 @@ import React from 'react'
 import cloneDeep from "lodash/cloneDeep";
 
 export const entries = [{
-  id: 58394,
-  name: 'Jan Kowalski',
-  pakiet: 0,
+  id: '58394',
+
   wartoscUbezpieczenia: '2 000 000 PLN',
+  name: 'Jan Kowalski',
   miasto: 'Warszawa',
+
+  pakiet: 0,
   mieszkanie: true,
   adres: 'Wilcza 14, Warszawa, Poland',
   numerMieszkania: 11,
@@ -27,12 +29,24 @@ export const entries = [{
   'dodatkowa.oc.Komfort': false,
   'dodatkowa.prawna.Komfort': false,
   'suwak.Komfort': 360,
+
+  'nieruchomosci.Premium': '750 000 PLN',
+  'ruchomosci.Premium': '10 000 PLN',
+  'stale.Premium': '5 000 PLN',
+  'dodatkowa.Premium': '10 000 PLN',
+  'dodatkowa.pomoc.Premium': true,
+  'dodatkowa.stluczenie.Premium': true,
+  'dodatkowa.oc.Premium': true,
+  'dodatkowa.prawna.Premium': true,
+  'suwak.Premium': 600
 }, {
-  id: 58395,
-  name: 'Adrian Owczarczyk',
-  pakiet: 1,
+  id: '58395',
+
   wartoscUbezpieczenia: '7 000 000 PLN',
+  name: 'Adrian Owczarczyk',
   miasto: 'Warszawa',
+
+  pakiet: 1,
   mieszkanie: false,
   adres: 'Hoża 69, Warszawa, Poland',
   numerKarty: 59483949,
@@ -51,7 +65,17 @@ export const entries = [{
   'dodatkowa.stluczenie.Premium': true,
   'dodatkowa.oc.Premium': true,
   'dodatkowa.prawna.Premium': true,
-  'suwak.Premium': 600
+  'suwak.Premium': 600,
+
+  'nieruchomosci.Komfort': '750 000 PLN',
+  'ruchomosci.Komfort': '10 000 PLN',
+  'stale.Komfort': '5 000 PLN',
+  'dodatkowa.Komfort': '5 000 PLN',
+  'dodatkowa.pomoc.Komfort': true,
+  'dodatkowa.stluczenie.Komfort': true,
+  'dodatkowa.oc.Komfort': false,
+  'dodatkowa.prawna.Komfort': false,
+  'suwak.Komfort': 360
 }]
 
 export const additionalOptions = [

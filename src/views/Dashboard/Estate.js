@@ -5,26 +5,23 @@ import './Estate.css'
 import Store from '../../store/Store'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
 import Checkbox from '../../components/Checkbox/Checkbox'
+import NotFound from '../../components/NotFound/NotFound'
 import { heat1 } from '../../mocks'
 
-const Estate = ({ match }) => {
-  const id = +match.params.id
+const Estate = ({ match, history }) => {
+  const id = match.params.id
   const entry = find(Store.getValue('entries'), { id })
 
   if (!entry) {
-    return (
-      <div className="estate">
-        <h2>Entry {id} not found</h2>
-      </div>
-    )
+    return <NotFound id={id} />
   }
 
   return (
     <div className="estate">
       <div className="breadcrumbs">
-        <a href="/dashboard" className="link">Oferty klientów</a>
+        <a className="link" onClick={() => history.push('/dashboard')}>Oferty klientów</a>
         <i className="fal fa-angle-right" />
-        <a href={`/dashboard/${id}`} className="link">Oferta#{id}</a>
+        <a className="link" onClick={() => history.push(`/dashboard/${id}`)}>Oferta#{id}</a>
         <i className="fal fa-angle-right" />Analiza nieruchomości
       </div>
 
@@ -44,10 +41,10 @@ const Estate = ({ match }) => {
               <span>Rodzaj nieruchomości</span>
               <div>
                 <Checkbox defaultChecked
-                  label={<span><i className={`far fa-building`} /> Mieszkania</span>}
+                          label={<span><i className={`far fa-building`} /> Mieszkania</span>}
                 />
                 <Checkbox defaultChecked
-                  label={<span><i className={`far fa-home`} /> Domy</span>}
+                          label={<span><i className={`far fa-home`} /> Domy</span>}
                 />
               </div>
             </div>

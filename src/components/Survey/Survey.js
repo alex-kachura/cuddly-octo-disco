@@ -15,37 +15,44 @@ import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import HeatmapOverlay from '../HeatmapOverlay/HeatmapOverlay'
 import { antiTheft, additionalSecurity, offers } from '../../mocks'
 
-class Survey extends React.Component {
+class Survey extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
-    const initialState = {
-      adres: '',
-      mieszkanie: false,
-      numerMieszkania: '',
-      numerKarty: '',
-      pzuAuto: false,
-      stale: false,
-      cesja: false,
-      'suwak.Komfort': offers[0].price,
-      'suwak.Premium': offers[1].price,
-      pakiet: offers[0].id
+    const { prefill, entryId } = this.props
+
+    if (prefill) {
+      this.state = { ...find(Store.getValue('entries'), {id: entryId}) }
+    } else {
+      const initialState = {
+        adres: '',
+        mieszkanie: false,
+        numerMieszkania: '',
+        numerKarty: '',
+        pzuAuto: false,
+        stale: false,
+        cesja: false,
+        'suwak.Komfort': offers[0].price,
+        'suwak.Premium': offers[1].price,
+        pakiet: offers[0].id
+      }
+
+      antiTheft.forEach(anti => {
+        initialState[anti.name] = false
+      })
+
+      offers.forEach(offer => {
+        offer.insurances.forEach(insurance => {
+          initialState[insurance.name] = insurance.amount
+        })
+        additionalSecurity.forEach((additional, index) => {
+          initialState[`${additional.name}.${offer.label}`] = index < 1
+        })
+      })
+
+      this.state = initialState
     }
 
-    antiTheft.forEach(anti => {
-      initialState[anti.name] = false
-    })
-
-    offers.forEach(offer => {
-      offer.insurances.forEach(insurance => {
-        initialState[insurance.name] = insurance.amount
-      })
-      additionalSecurity.forEach((additional, index) => {
-        initialState[`${additional.name}.${offer.label}`] = index < 1
-      })
-    })
-
-    this.state = initialState
     this.mouseHistory = []
     this.mousePath = []
     this.currentMousePos = { x: 0, y: 0, value: 0 }
@@ -60,10 +67,6 @@ class Survey extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.prefill) {
-      this.setState({ ...Store.getValue('entries')[0] })
-    }
-
     if (this.props.track) {
       window.onmousemove = this.saveMousePos
       this.surveyEl.addEventListener('mousemove', this.saveMousePos)
@@ -77,7 +80,6 @@ class Survey extends React.Component {
       window.clearInterval(this.mouseSampleInterval)
     }
   }
-
 
   onAnswerChange(event) {
     const { name, value, checked, type } = event.target
@@ -163,7 +165,13 @@ class Survey extends React.Component {
   submitSurvey() {
     const entries = [...Store.getValue('entries')]
 
-    entries.push({ ...this.state, id: +uniqueId() })
+    entries.push({
+      id: uniqueId(),
+      ...this.state,
+      wartoscUbezpieczenia: '3 000 000 PLN',
+      name: 'Nowy Klient',
+      miasto: 'Warszawa',
+    })
 
     Store.setValue('entries', entries)
     Store.setValue('mouseHistory', this.mouseHistory)
@@ -221,10 +229,15 @@ class Survey extends React.Component {
   }
 
   render() {
-    const mouseHistory = Store.getValue('mouseHistory')
-    const mousePath = Store.getValue('mousePath')
-    const { heatmap } = this.props
+    const { heatmap, prefill } = this.props
     const { mieszkanie, pakiet, adres, numerMieszkania, numerKarty, pzuAuto, stale, cesja } = this.state
+
+    let mouseHistory;
+    let mousePath;
+    if (heatmap) {
+      mouseHistory = Store.getValue('mouseHistory');
+      mousePath = Store.getValue('mousePath');
+    }
 
     return (
       <div className="survey-component" ref={el => this.surveyEl = el}>
@@ -289,7 +302,7 @@ class Survey extends React.Component {
         </div>
 
         {
-          (adres || heatmap) &&
+          (adres || prefill) &&
           <div className="offer">
             <h3>Oferta dla Ciebie</h3>
             <h6>Możesz przesuwać suwak aby nasz system zmodyfikował ofertę dla Ciebie</h6>
@@ -328,7 +341,7 @@ class Survey extends React.Component {
         }
 
         {
-          (adres || heatmap) &&
+          (adres || prefill) &&
           <button className="button-default submit" onClick={this.submitSurvey}>Kupuję</button>
         }
 
@@ -345,12 +358,14 @@ Survey.propTypes = {
   track: PropTypes.bool,
   heatmap: PropTypes.bool,
   prefill: PropTypes.bool,
+  entryId: PropTypes.string,
   onComplete: PropTypes.func
 }
 Survey.defaultProps = {
   track: true,
   heatmap: false,
   prefill: false,
+  entryId: '0',
   onComplete: noop
 }
 

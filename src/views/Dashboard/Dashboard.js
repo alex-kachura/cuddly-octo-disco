@@ -7,7 +7,7 @@ import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import { offers } from '../../mocks'
 
-class Dashboard extends React.Component {
+class Dashboard extends React.PureComponent {
   constructor(...args) {
     super(...args)
 

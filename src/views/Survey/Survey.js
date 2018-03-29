@@ -21,7 +21,7 @@ class Survey extends Component {
 
     return (
       <div className="survey">
-        {!surveyOptions.heatmap && <h3 className="survey__title">Wycena nieruchomości</h3>}
+        <h3 className="survey__title">Wycena nieruchomości</h3>
         <SurveyComponent {...surveyOptions} />
       </div>
     )
