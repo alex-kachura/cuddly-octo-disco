@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
+import { CookiesProvider } from 'react-cookie'
 
 import './App.css'
 import Survey from './views/Survey/Survey'
@@ -34,18 +35,20 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div className="app">
-          <Header />
-          <Route exact path="/" component={Fork} />
-          <Route exact path="/survey" component={Survey} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/dashboard/:id" component={Entry} />
-          <Route exact path="/dashboard/:id/analysis" component={Analysis} />
-          <Route exact path="/dashboard/:id/estate" component={Estate} />
-          <Route exact path="/confirmation" component={Confirmation} />
-        </div>
-      </Router>
+      <CookiesProvider>
+        <Router>
+          <div className="app">
+            <Header />
+            <Route exact path="/" component={Fork} />
+            <Route exact path="/survey" component={Survey} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/dashboard/:id" component={Entry} />
+            <Route exact path="/dashboard/:id/analysis" component={Analysis} />
+            <Route exact path="/dashboard/:id/estate" component={Estate} />
+            <Route exact path="/confirmation" component={Confirmation} />
+          </div>
+        </Router>
+      </CookiesProvider>
     )
   }
 }

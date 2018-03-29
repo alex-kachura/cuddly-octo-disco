@@ -1,3 +1,4 @@
+import React from 'react'
 import cloneDeep from "lodash/cloneDeep";
 
 export const entries = [{
@@ -74,32 +75,32 @@ export const entries = [{
 }]
 
 export const antiTheft = [
-  { name: 'kradziezDrzwi', icon: 'fa-lock-alt', label: 'Drzwi lub zamki atestowane' },
-  { name: 'kradziezOkna', icon: 'fa-th-large', label: 'Zabezpieczenia okien' },
-  { name: 'kradziezAlarm', icon: 'fa-bell', label: 'Alarm' },
-  { name: 'kradziezMonitoring', icon: 'fa-video', label: 'Monitoring' }
+  { name: 'kradziez.drzwi', icon: 'fa-lock-alt', label: 'Drzwi lub zamki atestowane' },
+  { name: 'kradziez.okna', icon: 'fa-th-large', label: 'Zabezpieczenia okien' },
+  { name: 'kradziez.alarm', icon: 'fa-bell', label: 'Alarm' },
+  { name: 'kradziez.monitoring', icon: 'fa-video', label: 'Monitoring' }
 ]
 
 export const additionalSecurity = [
-  { name: 'dodatkowaPomoc', icon: 'fa-home', label: 'Pomoc w domu' },
-  { name: 'dodatkowaStluczenie', icon: 'fa-glass-martini', label: 'Przedmioty od stłuczenia' },
-  { name: 'dodatkowaOc', icon: 'fa-user-alt', label: 'OC prywatne' },
-  { name: 'dodatkowaPrawna', icon: 'fa-gavel', label: 'Ochrona prawna' }
+  { name: 'dodatkowa.pomoc', icon: 'fa-home', label: 'Pomoc w domu' },
+  { name: 'dodatkowa.stluczenie', icon: 'fa-glass-martini', label: 'Przedmioty od stłuczenia' },
+  { name: 'dodatkowa.oc', icon: 'fa-user-alt', label: 'OC prywatne' },
+  { name: 'dodatkowa.prawna', icon: 'fa-gavel', label: 'Ochrona prawna' }
 ]
 
 export const offers = [
   {
     id: 0,
     label: 'Komfort',
-    min: 250,
-    price: 350,
-    max: 450,
+    min: 240,
+    price: 330,
+    max: 420,
     insurances: [
       { name: 'nieruchomosciKomfort', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
       { name: 'ruchomosciKomfort', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
-      { name: 'staleKomfort', label: 'Stałe elementy', amount: '5 000 PLN', price: '100 PLN' },
+      { name: 'staleKomfort', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {
-        name: 'dodatkowaKomfort', label: 'Dodatkowa ochrona', amount: '5 000 PLN',
+        name: 'dodatkowaKomfort', label: 'Dodatkowa ochrona', amount: '5 000 PLN', amountAlt: '2 500 PLN',
         items: cloneDeep(additionalSecurity).map(i => ({
           ...i,
           name: i.name += 'Komfort'
@@ -110,15 +111,15 @@ export const offers = [
   {
     id: 1,
     label: 'Premium',
-    min: 500,
-    price: 550,
+    min: 480,
+    price: 540,
     max: 600,
     insurances: [
       { name: 'nieruchomosciPremium', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
       { name: 'ruchomosciPremium', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
-      { name: 'stalePremium', label: 'Stałe elementy', amount: '5 000 PLN', price: '100 PLN' },
+      { name: 'stalePremium', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {
-        name: 'dodatkowaPremium', label: 'Dodatkowa ochrona', amount: '10 000 PLN',
+        name: 'dodatkowaPremium', label: 'Dodatkowa ochrona', amount: '10 000 PLN', amountAlt: '5 000 PLN',
         items: cloneDeep(additionalSecurity).map(i => ({
           ...i,
           name: i.name += 'Premium'
@@ -127,6 +128,39 @@ export const offers = [
     ]
   }
 ]
+
+export const pzuServices = [
+  { name: 'ubezpieczenieNieruchomosci', icon: 'fa-home', label: 'Ubezpiecznie nieruchomości' },
+  { name: 'oc', icon: 'fa-car', label: 'OC', value: true },
+  { name: 'ac', icon: 'fa-car', label: 'AC' },
+  { name: 'ocZycie', icon: 'fa-user', label: 'OC na życie' }
+]
+
+export const additionalOptions = [
+  { name: 'a', label: 'Karta zniżkowa nr 59483949', value: true },
+  { name: 'b', label: 'Ubezpieczenie PZU AUTO', value: true },
+  { name: 'c', label: 'Stale element' },
+  { name: 'd', label: 'Cesja' }
+]
+
+export const suggestions = {
+  nieruchomosciKomfort: {
+    suggestion: 'Zwiększenie wartości nieruchomości',
+    reason:
+      <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
+    link: 'Zobacz analizę',
+    type: 'upsell'
+  },
+  ruchomosciKomfort: {
+    suggestion: 'Zwiększenie wartości ruchomości domowych',
+    reason: 'Klient posia laptop Macbook Pro 2017 o wartości rynkowej 10 000 PLN',
+    type: 'upsell'
+  },
+  dodatkowaOcKomfort: {
+    suggestion: 'Powiększenie oferty o OC',
+    reason: 'Klient nie posiada OC'
+  }
+}
 
 export const heat1 = [
   {

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import uniqueId from 'lodash/uniqueId'
+import noop from 'lodash/noop'
+import find from 'lodash/find'
 
 import './Survey.css'
 import Store from '../../store/Store'
@@ -12,22 +14,6 @@ import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import HeatmapOverlay from '../HeatmapOverlay/HeatmapOverlay'
-
-const propTypes = {
-  track: PropTypes.bool,
-  heatmap: PropTypes.bool,
-  prefill: PropTypes.bool,
-  onComplete: PropTypes.func
-}
-const defaultProps = {
-  track: true,
-  heatmap: false,
-  prefill: false,
-  onComplete: () => {
-  }
-}
-
-const mapOfferIdToLabel = ['Komfort', 'Premium']
 
 class Survey extends React.Component {
   constructor(...args) {
@@ -100,67 +86,79 @@ class Survey extends React.Component {
 
     answers[name] = type === 'checkbox' ? checked : value
 
-    const {
-      dodatkowaPomocKomfort, dodatkowaStluczenieKomfort, dodatkowaOcKomfort, dodatkowaPrawnaKomfort,
-      dodatkowaPomocPremium, dodatkowaStluczeniePremium, dodatkowaOcPremium, dodatkowaPrawnaPremium
-    } = answers
-
     if (/^suwak/.test(name)) {
-      if (/Komfort$/.test(name)) {
-        Object.assign(answers, this.getAdditionalItems(offers[0], value))
-      }
-      if (/Premium$/.test(name)) {
-        Object.assign(answers, this.getAdditionalItems(offers[1], value))
-      }
+      Object.assign(answers, this.getAdditionalItems(name, offers, value))
     }
-    if (/^dodatkowa/.test(name)) {
-      if (/Komfort$/.test(name)) {
-        answers.suwakKomfort = this.getAdjustedSliderValue(offers[0], dodatkowaPomocKomfort, dodatkowaStluczenieKomfort, dodatkowaOcKomfort, dodatkowaPrawnaKomfort)
-      }
-      if (/Premium$/.test(name)) {
-        answers.suwakPremium = this.getAdjustedSliderValue(offers[1], dodatkowaPomocPremium, dodatkowaStluczeniePremium, dodatkowaOcPremium, dodatkowaPrawnaPremium)
 
-      }
+    if (/^(dodatkowa|stale)/.test(name)) {
+      Object.assign(answers, this.getAdjustedSliderValue(name, offers, answers))
     }
 
     this.setState({ ...answers })
   }
 
-  getAdditionalItems = ({ id, price, min, max }, value) => {
-    const offer = mapOfferIdToLabel[id]
+  getAdditionalItems = (name, offers, value) => {
+    const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
+    const { label, min, max } = offer
+    const delta = (max - min) / 6
+    const stale = find(offer.insurances, { name: `stale${label}` })
+    const dodatkowa = find(offer.insurances, { name: `dodatkowa${label}` })
     const additionalItems = {
-      [`dodatkowaPomoc${offer}`]: true,
-      [`dodatkowaStluczenie${offer}`]: true,
-      [`dodatkowaOc${offer}`]: true,
-      [`dodatkowaPrawna${offer}`]: true
+      [`dodatkowa.pomoc${label}`]: true,
+      [`dodatkowa.stluczenie${label}`]: true,
+      [`dodatkowa.oc${label}`]: true,
+      [`dodatkowa.prawna${label}`]: true,
+      [`stale${label}`]: stale.amount,
+      [`dodatkowa${label}`]: dodatkowa.amount,
+      [`suwak${label}`]: max
     }
 
-    if (value <= price - (price - min) / 2) {
-      additionalItems[`dodatkowaStluczenie${offer}`] = false
+    if (value < min + delta * 6) {
+      additionalItems[`dodatkowa.prawna${label}`] = false
+      additionalItems[`suwak${label}`] = min + delta * 5
     }
-    if (value <= price) {
-      additionalItems[`dodatkowaOc${offer}`] = false
+    if (value <= min + delta * 5) {
+      additionalItems[`dodatkowa.oc${label}`] = false
+      additionalItems[`suwak${label}`] = min + delta * 4
     }
-    if (value <= price + (max - price) / 2) {
-      additionalItems[`dodatkowaPrawna${offer}`] = false
+    if (value <= min + delta * 4) {
+      additionalItems[`dodatkowa.stluczenie${label}`] = false
+      additionalItems[`suwak${label}`] = min + delta * 3
     }
-    if (value <= min) {
-      additionalItems[`dodatkowaPomoc${offer}`] = false
+    if (value <= min + delta * 3) {
+      additionalItems[`dodatkowa.pomoc${label}`] = false
+      additionalItems[`suwak${label}`] = min + delta * 2
+    }
+    if (value <= min + delta * 2) {
+      additionalItems[`dodatkowa${label}`] = label === 'Komfort' ? '2 500 PLN' : '5 000 PLN'
+      additionalItems[`suwak${label}`] = min + delta
+    }
+    if (value <= min + delta) {
+      additionalItems[`stale${label}`] = '2 500 PLN'
+      additionalItems[`suwak${label}`] = min
     }
 
     return additionalItems;
   }
 
-  getAdjustedSliderValue = ({ price, min, max }, dodatkowaPomoc, dodatkowaStluczenie, dodatkowaOc, dodatkowaPrawna) => {
+  getAdjustedSliderValue = (name, offers, answers) => {
+    const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
+    const { label, min, max } = offer
+    const delta = (max - min) / 6
+    const stale = find(offer.insurances, { name: `stale${label}` })
+    const dodatkowa = find(offer.insurances, { name: `dodatkowa${label}` })
     let value = min
-    const delta = (max - price) / 2
 
-    if (dodatkowaPomoc) value += delta
-    if (dodatkowaStluczenie) value += delta
-    if (dodatkowaOc) value += delta
-    if (dodatkowaPrawna) value += delta
+    if (answers[`stale${label}`] === stale.amount) value += delta
+    if (answers[`dodatkowa${label}`] === dodatkowa.amount) value += delta
+    if (answers[`dodatkowa.pomoc${label}`]) value += delta
+    if (answers[`dodatkowa.stluczenie${label}`]) value += delta
+    if (answers[`dodatkowa.oc${label}`]) value += delta
+    if (answers[`dodatkowa.prawna${label}`]) value += delta
 
-    return value
+    return ({
+      [`suwak${label}`]: value
+    })
   }
 
   submitSurvey() {
@@ -344,6 +342,21 @@ class Survey extends React.Component {
   }
 }
 
+Survey.propTypes = {
+  track: PropTypes.bool,
+  heatmap: PropTypes.bool,
+  prefill: PropTypes.bool,
+  onComplete: PropTypes.func
+}
+Survey.defaultProps = {
+  track: true,
+  heatmap: false,
+  prefill: true,
+  onComplete: noop
+}
+
+export default Survey
+
 const Slider = ({ showMax, selectedOffer, offer, state, onChange }) => {
   const name = `suwak${offer.label}`;
   return (
@@ -424,8 +437,3 @@ const CheckboxList = ({ items, state, onChange }) =>
       )
     }
   </ul>
-
-Survey.propTypes = propTypes
-Survey.defaultProps = defaultProps
-
-export default Survey

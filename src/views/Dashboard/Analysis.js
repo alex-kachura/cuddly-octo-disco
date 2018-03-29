@@ -20,14 +20,13 @@ const Analysis = ({ match }) => {
   return (
     <div className="analysis">
       <div className="breadcrumbs">
-        <a href="/dashboard" className="link">
-          Oferty klientów
-        </a> <i className="fal fa-angle-right" /> <a href={`/dashboard/${id}`} className="link">
-          Oferta#{id}
-        </a> <i className="fal fa-angle-right" /> Analiza formularza
+        <a href="/dashboard" className="link">Oferty klientów</a>
+        <i className="fal fa-angle-right" />
+        <a href={`/dashboard/${id}`} className="link">Oferta#{id}</a>
+        <i className="fal fa-angle-right" />Analiza zachowania
       </div>
 
-      <h3>Analiza formularza</h3>
+      <h3>Analiza zachowania</h3>
 
       <div className="analysis__wrapper">
         <div className="analysis__survey">

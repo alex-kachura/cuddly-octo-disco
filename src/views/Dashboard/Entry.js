@@ -1,57 +1,39 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import PropTypes from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie'
 import find from 'lodash/find'
 import classNames from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 
 import './Entry.css'
 import Store from '../../store/Store'
-import { antiTheft, offers, heat1 } from '../../mocks'
+import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heat1 } from '../../mocks'
 import Modal from '../../components/Modal/Modal'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
 
-const pzuServices = [
-  { name: 'ubezpieczenieNieruchomosci', icon: 'fa-home', label: 'Ubezpiecznie nieruchomości' },
-  { name: 'oc', icon: 'fa-car', label: 'OC', value: true },
-  { name: 'ac', icon: 'fa-car', label: 'AC' },
-  { name: 'ocZycie', icon: 'fa-user', label: 'OC na życie' }
-]
-const additionalOptions = [
-  { name: 'a', label: 'Karta zniżkowa nr 59483949', value: true },
-  { name: 'b', label: 'Ubezpieczenie PZU AUTO', value: true },
-  { name: 'c', label: 'Stale element' },
-  { name: 'd', label: 'Cesja' }
-]
-const suggestions = {
-  nieruchomosciKomfort: {
-    suggestion: 'Zwiększenie wartości nieruchomości',
-    reason:
-      <span>Inne domy w okolicy są ubezpieczone o średnio <strong>50 000 więcej</strong>.</span>,
-    link: 'Zobacz analizę',
-    type: 'upsell'
-  },
-  ruchomosciKomfort: {
-    suggestion: 'Zwiększenie wartości ruchomości domowych',
-    reason: 'Klient posia laptop Macbook Pro 2017 o wartości rynkowej 10 000 PLN',
-    type: 'upsell'
-  },
-  dodatkowaOcKomfort: {
-    suggestion: 'Powiększenie oferty o OC',
-    reason: 'Klient nie posiada OC'
-  }
-}
-
-export default class Entry extends React.Component {
+class Entry extends React.Component {
   constructor(...args) {
     super(...args)
 
+    const { cookies } = this.props;
+
     this.state = {
-      isAdvancedMode: false,
+      isAdvancedMode: cookies.get('isAdvancedMode') === 'true',
       isShowAnalysisModal: false,
       isShowNeighborhoodModal: false
     }
+
+    this.toggleAdvancedMode = this.toggleAdvancedMode.bind(this)
+  }
+
+  toggleAdvancedMode(isAdvancedMode) {
+    const { cookies } = this.props;
+
+    cookies.set('isAdvancedMode', isAdvancedMode)
+    this.setState({ isAdvancedMode })
   }
 
   render() {
@@ -78,13 +60,13 @@ export default class Entry extends React.Component {
           <label>Tryb</label>
           <button
             className={classNames("button-toggle", { active: !isAdvancedMode })}
-            onClick={() => this.setState({ isAdvancedMode: false })}
+            onClick={() => this.toggleAdvancedMode(false)}
           >
             Domyślny
           </button>
           <button
             className={classNames("button-toggle", { active: isAdvancedMode })}
-            onClick={() => this.setState({ isAdvancedMode: true })}
+            onClick={() => this.toggleAdvancedMode(true)}
           >
             Zaawansowany
           </button>
@@ -96,7 +78,7 @@ export default class Entry extends React.Component {
           <div className="entry__section entry__section--survey">
             <div className="entry__section__header">
               <h3><i className="far fa-clipboard-list" /> Oferta klienta</h3>
-              <a href={`/dashboard/${id}/analysis`} className="link">Analiza ruchu</a>
+              <a href={`/dashboard/${id}/analysis`} className="link">Analiza zachowania</a>
             </div>
 
             <OfferCard
@@ -260,19 +242,25 @@ export default class Entry extends React.Component {
           isShown={this.state.isShowAnalysisModal}
           onClose={() => this.setState({ isShowAnalysisModal: false })}
         >
-          <AnalysisModal />
+          <AnalysisModal address={entry.adres} />
         </Modal>
 
         <Modal
           isShown={this.state.isShowNeighborhoodModal}
           onClose={() => this.setState({ isShowNeighborhoodModal: false })}
         >
-          <NeighborhoodModal />
+          <NeighborhoodModal address={entry.adres} />
         </Modal>
       </div>
     )
   }
 }
+
+Entry.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired
+}
+
+export default withCookies(Entry)
 
 const OfferCard = ({ state, card, onAnalysisClick }) =>
   <div className={classNames("package-card", { selected: card.id === state.pakiet })}>
@@ -357,7 +345,7 @@ const Suggestion = ({ suggestion, reason, link, type, id, onAnalysisClick }) =>
     }
   </div>
 
-const AnalysisModal = () =>
+const AnalysisModal = ({ address }) =>
   <div className="analysis-modal">
     <div className="analysis-modal__header">
       <h3>
@@ -379,6 +367,7 @@ const AnalysisModal = () =>
       <MapHeatmap
         icon="far fa-money-bill"
         title="Ceny ubezpieczeń w okolicy"
+        address={address}
         data={heat1}
         minLabel="50 000"
         maxLabel="250 000+"
@@ -386,7 +375,7 @@ const AnalysisModal = () =>
     </div>
   </div>
 
-const NeighborhoodModal = () =>
+const NeighborhoodModal = ({ address }) =>
   <div className="analysis-modal">
     <div className="analysis-modal__header">
       <h3>
@@ -406,6 +395,7 @@ const NeighborhoodModal = () =>
       <MapHeatmap
         icon="far fa-unlock"
         title="Bezpieczeństwo okolicy"
+        address={address}
         data={heat1}
         minLabel="Niska przestępczość"
         maxLabel="Wysoka przestępczość"

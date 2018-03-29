@@ -174,18 +174,21 @@
   }
 
   .personal-details {
-    margin-top: 25px;
+    margin-top: 30px;
     line-height: 30px;
+
+    h6 {
+      margin-bottom: 10px;
+    }
 
     &__lists {
       display: flex;
       flex-wrap: wrap;
       font-size: 12px;
-      margin-top: 10px;
       color: $grey-dark;
 
       ul + ul {
-        margin-left: 35px;
+        margin-left: 39px;
       }
     }
   }

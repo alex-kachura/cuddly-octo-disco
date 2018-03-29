@@ -6,7 +6,7 @@ import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(...args) {
     super(...args)
 
@@ -138,3 +138,5 @@ export default class Dashboard extends React.Component {
     )
   }
 }
+
+export default Dashboard

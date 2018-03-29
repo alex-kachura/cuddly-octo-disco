@@ -69,7 +69,7 @@ const Estate = ({ match }) => {
           <MapHeatmap
             icon="far fa-money-bill"
             title="Ceny ubezpieczeń w okolicy"
-            markers={[entry.adres]}
+            address={entry.adres}
             data={heat1}
             minLabel="50 000"
             maxLabel="250 000+"
@@ -77,7 +77,7 @@ const Estate = ({ match }) => {
           <MapHeatmap
             icon="far fa-unlock"
             title="Bezpieczeństwo okolicy"
-            markers={[entry.adres]}
+            address={entry.adres}
             data={heat1}
             minLabel="Niska przestępczość"
             maxLabel="Wysoka przestępczość"
@@ -85,7 +85,7 @@ const Estate = ({ match }) => {
           <MapHeatmap
             icon="i icon-weather"
             title="Zagrożenia powodziowe"
-            markers={[entry.adres]}
+            address={entry.adres}
             data={heat1}
             minLabel="Mała szansa"
             maxLabel="Duża szansa"
@@ -93,7 +93,7 @@ const Estate = ({ match }) => {
           <MapHeatmap
             icon="far fa-fire"
             title="Zagrożenia pożarowe"
-            markers={[entry.adres]}
+            address={entry.adres}
             data={heat1}
             minLabel="Mała szansa"
             maxLabel="Duża szansa"
