@@ -22,7 +22,7 @@ class Survey extends React.PureComponent {
     const { prefill, entryId } = this.props
 
     if (prefill) {
-      this.state = { ...find(Store.getValue('entries'), {id: entryId}) }
+      this.state = { ...find(Store.getValue('entries'), { id: entryId }) }
     } else {
       const initialState = {
         adres: '',
@@ -245,9 +245,10 @@ class Survey extends React.PureComponent {
           <div className="address-row">
             <div className="input-type">
               <label>Typ</label><br />
-              <div className="toggle">
+              <div className={`toggle ${mieszkanie ? 'flat' : 'house'}`}>
                 <i className="far fa-home" />
-                <Toggle name="mieszkanie" checked={mieszkanie} onChange={this.onAnswerChange} />
+                <Toggle name="mieszkanie" checked={mieszkanie} onChange={this.onAnswerChange}
+                        filled />
                 <i className="far fa-building" />
               </div>
             </div>

@@ -14,11 +14,14 @@ class Dashboard extends React.PureComponent {
     this.state = {
       isShowMap: true,
       isShowFlats: true,
-      isShowHouses: true
+      isShowHouses: true,
+      monthlyCost: 300,
+      insuranceAmount: 1000000
     }
 
     this.toggleMap = this.toggleMap.bind(this)
     this.filterByType = this.filterByType.bind(this)
+    this.filterByAmount = this.filterByAmount.bind(this)
   }
 
   toggleMap() {
@@ -30,6 +33,10 @@ class Dashboard extends React.PureComponent {
       { isShowFlats: !this.state.isShowFlats } :
       { isShowHouses: !this.state.isShowHouses }
     )
+  }
+
+  filterByAmount(event) {
+    console.log(event.target.value)
   }
 
   toEntryDetails = (id) => {
@@ -64,9 +71,7 @@ class Dashboard extends React.PureComponent {
                   <div className="default-filters">
                     <label className="filter">
                       <span>Obszar</span>
-                      <select>
-                        <option>Centrum, Mokotów, Warszawa</option>
-                      </select>
+                      <div>Centrum, Mokotów, Warszawa</div>
                     </label>
                     <div className="filter">
                       <span>Rodzaj nieruchomości</span>
@@ -84,14 +89,18 @@ class Dashboard extends React.PureComponent {
                     </div>
                     <label className="filter">
                       <span>Miesięczny koszt</span>
-                      <select>
+                      <select name="monthlyCost" onChange={this.filterByAmount}>
+                        <option>> 300 PLN</option>
+                        <option>> 400 PLN</option>
                         <option>> 500 PLN</option>
                       </select>
                     </label>
                     <label className="filter">
                       <span>Kwota ubezpieczenia</span>
-                      <select>
+                      <select name="insuranceAmount" onChange={this.filterByAmount}>
                         <option>> 1 000 000 PLN</option>
+                        <option>> 3 000 000 PLN</option>
+                        <option>> 5 000 000 PLN</option>
                       </select>
                     </label>
                   </div>

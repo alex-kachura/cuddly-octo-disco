@@ -9,6 +9,10 @@
     .toggle {
       width: 108px;
       height: 30px;
+
+      &.flat .fa-home, &.house .fa-building {
+        opacity: .5;
+      }
     }
     .google-map {
       height: 270px;
@@ -83,16 +87,8 @@
       box-shadow: 0 2px 4px 0 rgba(1, 66, 130, 0.15);
       background-color: $white;
 
-      &:hover {
-        background-color: $grey-light-1;
-      }
-
-      &.selected {
+      &:hover, &.selected {
         border: 2px solid $blue-dark;
-
-        &:hover {
-          background-color: $white;
-        }
       }
 
       .package-price {

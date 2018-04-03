@@ -126,7 +126,7 @@ export const offers = [
     price: 520,
     max: 610,
     insurances: [
-      { name: 'nieruchomosci.Premium', label: 'Nieruchomośći', amount: '750 000 PLN', price: '200 PLN' },
+      { name: 'nieruchomosci.Premium', label: 'Nieruchomośći', amount: '900 000 PLN', price: '200 PLN' },
       { name: 'ruchomosci.Premium', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
       { name: 'stale.Premium', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {

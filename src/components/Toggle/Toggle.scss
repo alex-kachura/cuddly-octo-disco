@@ -12,4 +12,8 @@
   .svg-inline--fa + label, label + .svg-inline--fa {
     margin-left: 10px;
   }
+
+  .flipped {
+    transform: scale(-1, 1);
+  }
 }
