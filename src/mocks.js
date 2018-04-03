@@ -4,7 +4,7 @@ import cloneDeep from "lodash/cloneDeep";
 export const entries = [{
   id: '58394',
 
-  wartoscUbezpieczenia: '2 000 000 PLN',
+  insuranceAmount: 2000000,
   name: 'Jan Kowalski',
   miasto: 'Warszawa',
 
@@ -42,7 +42,7 @@ export const entries = [{
 }, {
   id: '58395',
 
-  wartoscUbezpieczenia: '7 000 000 PLN',
+  insuranceAmount: 7000000,
   name: 'Adrian Owczarczyk',
   miasto: 'Warszawa',
 

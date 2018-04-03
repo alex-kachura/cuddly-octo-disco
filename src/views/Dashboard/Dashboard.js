@@ -15,7 +15,7 @@ class Dashboard extends React.PureComponent {
       isShowMap: true,
       isShowFlats: true,
       isShowHouses: true,
-      monthlyCost: 300,
+      monthlyCost: 200,
       insuranceAmount: 1000000
     }
 
@@ -36,7 +36,11 @@ class Dashboard extends React.PureComponent {
   }
 
   filterByAmount(event) {
-    console.log(event.target.value)
+    const { name, value } = event.target
+
+    this.setState({
+      [name]: value
+    })
   }
 
   toEntryDetails = (id) => {
@@ -44,11 +48,15 @@ class Dashboard extends React.PureComponent {
   }
 
   render() {
-    const { isShowMap, isShowFlats, isShowHouses } = this.state
+    const { isShowMap, isShowFlats, isShowHouses, monthlyCost, insuranceAmount } = this.state
     const entries = Store.getValue('entries')
       .filter(entry => (
-        (isShowFlats && entry.mieszkanie === true) ||
-        (isShowHouses && entry.mieszkanie === false)
+        (
+          (isShowFlats && entry.mieszkanie === true) ||
+          (isShowHouses && entry.mieszkanie === false)
+        ) &&
+        entry[`suwak.${offers[entry.pakiet].label}`] > monthlyCost &&
+        entry.insuranceAmount > insuranceAmount
       ))
 
     return (
@@ -78,29 +86,31 @@ class Dashboard extends React.PureComponent {
                       <div>
                         <Checkbox onChange={() => this.filterByType(true)}
                                   checked={isShowFlats}
-                                  label={<span><i
-                                    className={`far fa-building`} /> Mieszkania</span>}
+                                  label={<span><i className="far fa-building" /> Mieszkania</span>}
                         />
                         <Checkbox onChange={() => this.filterByType(false)}
                                   checked={isShowHouses}
-                                  label={<span><i className={`far fa-home`} /> Domy</span>}
+                                  label={<span><i className="far fa-home" /> Domy</span>}
                         />
                       </div>
                     </div>
                     <label className="filter">
                       <span>Miesięczny koszt</span>
                       <select name="monthlyCost" onChange={this.filterByAmount}>
-                        <option>> 300 PLN</option>
-                        <option>> 400 PLN</option>
-                        <option>> 500 PLN</option>
+                        <option value={200}>> 200 PLN</option>
+                        <option value={300}>> 300 PLN</option>
+                        <option value={400}>> 400 PLN</option>
+                        <option value={500}>> 500 PLN</option>
+                        <option value={600}>> 600 PLN</option>
                       </select>
                     </label>
                     <label className="filter">
                       <span>Kwota ubezpieczenia</span>
                       <select name="insuranceAmount" onChange={this.filterByAmount}>
-                        <option>> 1 000 000 PLN</option>
-                        <option>> 3 000 000 PLN</option>
-                        <option>> 5 000 000 PLN</option>
+                        <option value={1000000}>> 1 000 000 PLN</option>
+                        <option value={3000000}>> 3 000 000 PLN</option>
+                        <option value={5000000}>> 5 000 000 PLN</option>
+                        <option value={7000000}>> 7 000 000 PLN</option>
                       </select>
                     </label>
                   </div>
@@ -131,7 +141,7 @@ class Dashboard extends React.PureComponent {
                       }
                     </td>
                     <td>{entry[`suwak.${offers[entry.pakiet].label}`]} PLN</td>
-                    <td>{entry.wartoscUbezpieczenia}</td>
+                    <td>{entry.insuranceAmount} PLN</td>
                     <td>{entry.name}</td>
                     <td>{entry.miasto}</td>
                     <td>{(new Date(Date.now())).toLocaleDateString('pl-PL')}</td>

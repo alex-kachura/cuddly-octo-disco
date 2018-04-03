@@ -168,7 +168,7 @@ class Survey extends React.PureComponent {
     entries.push({
       id: uniqueId(),
       ...this.state,
-      wartoscUbezpieczenia: '3 000 000 PLN',
+      insuranceAmount: 3000000,
       name: 'Nowy Klient',
       miasto: 'Warszawa',
     })
