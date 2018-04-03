@@ -6,7 +6,7 @@ import Store from '../../store/Store'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import NotFound from '../../components/NotFound/NotFound'
-import { heat1 } from '../../mocks'
+import { heatPrices, heatSafety, heatFlood, heatFire } from '../../mocks'
 
 const Estate = ({ match, history }) => {
   const id = match.params.id
@@ -67,7 +67,7 @@ const Estate = ({ match, history }) => {
             icon="far fa-money-bill"
             title="Ceny ubezpieczeń w okolicy"
             address={entry.adres}
-            data={heat1}
+            data={heatPrices}
             minLabel="50 000"
             maxLabel="250 000+"
           />
@@ -75,7 +75,7 @@ const Estate = ({ match, history }) => {
             icon="far fa-unlock"
             title="Bezpieczeństwo okolicy"
             address={entry.adres}
-            data={heat1}
+            data={heatSafety}
             minLabel="Niska przestępczość"
             maxLabel="Wysoka przestępczość"
           />
@@ -83,7 +83,7 @@ const Estate = ({ match, history }) => {
             icon="i icon-weather"
             title="Zagrożenia powodziowe"
             address={entry.adres}
-            data={heat1}
+            data={heatFlood}
             minLabel="Mała szansa"
             maxLabel="Duża szansa"
           />
@@ -91,7 +91,7 @@ const Estate = ({ match, history }) => {
             icon="far fa-fire"
             title="Zagrożenia pożarowe"
             address={entry.adres}
-            data={heat1}
+            data={heatFire}
             minLabel="Mała szansa"
             maxLabel="Duża szansa"
           />

@@ -13,7 +13,7 @@ import NotFound from '../../components/NotFound/NotFound'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import MapHeatmap from '../../components/MapHeatmap/MapHeatmap'
-import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heat1 } from '../../mocks'
+import { antiTheft, offers, pzuServices, additionalOptions, suggestions, heatPrices, heatSafety } from '../../mocks'
 
 class Entry extends React.PureComponent {
   constructor(...args) {
@@ -366,7 +366,7 @@ const AnalysisModal = ({ address }) =>
         icon="far fa-money-bill"
         title="Ceny ubezpieczeń w okolicy"
         address={address}
-        data={heat1}
+        data={heatPrices}
         minLabel="50 000"
         maxLabel="250 000+"
       />
@@ -394,7 +394,7 @@ const NeighborhoodModal = ({ address }) =>
         icon="far fa-unlock"
         title="Bezpieczeństwo okolicy"
         address={address}
-        data={heat1}
+        data={heatSafety}
         minLabel="Niska przestępczość"
         maxLabel="Wysoka przestępczość"
       />
