@@ -33,9 +33,7 @@ const Estate = ({ match, history }) => {
           <div className="default-filters">
             <label className="filter">
               <span>Obszar</span>
-              <select>
-                <option>Centrum, Mokotów, Warszawa</option>
-              </select>
+              <div>Centrum, Mokotów, Warszawa</div>
             </label>
             <div className="filter">
               <span>Rodzaj nieruchomości</span>

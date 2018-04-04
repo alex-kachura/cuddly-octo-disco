@@ -17,7 +17,11 @@
     background-size: 52px;
   }
 
-  &__link {
-    border-bottom: 5px solid $blue-bright;;
+  &__tab {
+    font-size: 16px;
+    padding: 33px 39px 26px;
+    color: $blue-bright;
+    border-left: 2px solid $grey-light-2;
+    border-bottom: 5px solid $blue-bright;
   }
 }
