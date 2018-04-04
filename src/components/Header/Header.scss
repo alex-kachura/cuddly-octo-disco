@@ -6,7 +6,7 @@
   color: $blue-dark;
   width: 100%;
   height: $header-height;
-  border-bottom: 2px solid $grey-light-2;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);
   background-color: $white;
 
   &__logo {
@@ -21,7 +21,7 @@
     font-size: 16px;
     padding: 33px 39px 26px;
     color: $blue-bright;
-    border-left: 2px solid $grey-light-2;
+    border-left: 1px solid $grey-light-2;
     border-bottom: 5px solid $blue-bright;
   }
 }

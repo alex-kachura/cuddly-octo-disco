@@ -8,7 +8,6 @@ export const entries = [{
   name: 'Jan Kowalski',
   miasto: 'Warszawa',
 
-  pakiet: 0,
   mieszkanie: true,
   adres: 'Wilcza 14, Warszawa, Poland',
   numerMieszkania: 11,
@@ -20,6 +19,8 @@ export const entries = [{
   'kradziez.okna': true,
   'kradziez.alarm': true,
   'kradziez.monitoring': true,
+
+  pakiet: 0,
   'nieruchomosci.Komfort': '750 000 PLN',
   'ruchomosci.Komfort': '10 000 PLN',
   'stale.Komfort': '5 000 PLN',
@@ -30,7 +31,7 @@ export const entries = [{
   'dodatkowa.prawna.Komfort': false,
   'suwak.Komfort': 360,
 
-  'nieruchomosci.Premium': '750 000 PLN',
+  'nieruchomosci.Premium': '1 00 000 PLN',
   'ruchomosci.Premium': '10 000 PLN',
   'stale.Premium': '5 000 PLN',
   'dodatkowa.Premium': '10 000 PLN',
@@ -46,7 +47,6 @@ export const entries = [{
   name: 'Adrian Owczarczyk',
   miasto: 'Warszawa',
 
-  pakiet: 1,
   mieszkanie: false,
   adres: 'Hoża 69, Warszawa, Poland',
   numerKarty: 59483949,
@@ -57,7 +57,9 @@ export const entries = [{
   'kradziez.okna': true,
   'kradziez.alarm': true,
   'kradziez.monitoring': true,
-  'nieruchomosci.Premium': '750 000 PLN',
+
+  pakiet: 1,
+  'nieruchomosci.Premium': '1 000 000 PLN',
   'ruchomosci.Premium': '10 000 PLN',
   'stale.Premium': '5 000 PLN',
   'dodatkowa.Premium': '10 000 PLN',
@@ -126,7 +128,7 @@ export const offers = [
     price: 520,
     max: 610,
     insurances: [
-      { name: 'nieruchomosci.Premium', label: 'Nieruchomośći', amount: '900 000 PLN', price: '200 PLN' },
+      { name: 'nieruchomosci.Premium', label: 'Nieruchomośći', amount: '1 000 000 PLN', price: '200 PLN' },
       { name: 'ruchomosci.Premium', label: 'Ruchomości domowe', amount: '10 000 PLN', price: '100 PLN' },
       { name: 'stale.Premium', label: 'Stałe elementy', amount: '5 000 PLN', amountAlt: '2 500 PLN', price: '100 PLN' },
       {

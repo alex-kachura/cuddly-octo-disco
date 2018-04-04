@@ -95,7 +95,7 @@ class Entry extends React.PureComponent {
           })}>
             <div>
               <div className="entry__section__header">
-                <h3><i className="far fa-user" /> Dane klienta</h3>
+                <h3><i className="i icon-user" /> Dane klienta</h3>
               </div>
 
               <h5>{entry.name}</h5>

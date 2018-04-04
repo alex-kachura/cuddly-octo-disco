@@ -15,6 +15,7 @@
       }
     }
     .google-map {
+      margin-bottom: 16px;
       height: 270px;
 
       &__pano {
@@ -24,7 +25,7 @@
   }
 
   .offer > h3 {
-    margin-top: 35px;
+    margin-top: 45px;
     margin-bottom: 10px;
   }
 
@@ -62,10 +63,6 @@
     width: 220px;
   }
 
-  .google-map {
-    margin-bottom: 20px;
-  }
-
   .anti-theft {
     h6 {
       margin: 25px 0 10px;
@@ -84,11 +81,14 @@
       align-items: center;
       padding: 35px;
       border: 2px solid $grey-light-2;
-      box-shadow: 0 2px 4px 0 rgba(1, 66, 130, 0.15);
       background-color: $white;
 
       &:hover, &.selected {
         border: 2px solid $blue-dark;
+      }
+
+      &.selected {
+        box-shadow: 0 2px 4px 0 rgba(1, 66, 130, 0.15);
       }
 
       .package-price {
@@ -147,6 +147,7 @@
           width: 110px;
 
           input {
+            font-size: 12px;
             height: 25px;
           }
         }
@@ -193,12 +194,11 @@
 
         &::-webkit-slider-thumb {
           -webkit-appearance: none;
-          border: 5px solid $grey-light-2;
-          height: 30px;
-          width: 30px;
-          background: $white;
+          margin-top: -6px;
+          height: 22px;
+          width: 22px;
+          background: $grey-light-2;
           cursor: pointer;
-          margin-top: -10px;
         }
         &::-webkit-slider-runnable-track {
           width: 100%;
@@ -211,18 +211,20 @@
         &:focus {
           outline: none;
         }
-        &:hover {
+        &:hover, &:active {
           &::-webkit-slider-thumb {
-            border-color: $grey-light-1;
-            background: $white;
+            background: $grey-1;
           }
           &::-webkit-slider-runnable-track {
-            background: $grey-light-1;
+            background: $grey-1;
           }
         }
-        &:active, &.selected {
+        &.selected {
           &::-webkit-slider-thumb {
-            border-color: $blue-dark;
+            margin-top: -10px;
+            border: 5px solid $blue-dark;
+            height: 30px;
+            width: 30px;
             background: $white;
           }
           &::-webkit-slider-runnable-track {

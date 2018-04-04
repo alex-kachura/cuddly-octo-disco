@@ -6,6 +6,7 @@ import Toggle from '../../components/Toggle/Toggle'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import GoogleMap from '../../components/GoogleMap/GoogleMap'
 import { offers } from '../../mocks'
+import { formatMoney } from '../../utils'
 
 class Dashboard extends React.PureComponent {
   constructor(...args) {
@@ -140,8 +141,8 @@ class Dashboard extends React.PureComponent {
                           <span><i className="far fa-home" /> Dom</span>
                       }
                     </td>
-                    <td>{entry[`suwak.${offers[entry.pakiet].label}`]} PLN</td>
-                    <td>{entry.insuranceAmount} PLN</td>
+                    <td>{formatMoney(entry[`suwak.${offers[entry.pakiet].label}`], 'PLN')}</td>
+                    <td>{formatMoney(entry.insuranceAmount, 'PLN')}</td>
                     <td>{entry.name}</td>
                     <td>{entry.miasto}</td>
                     <td>{(new Date(Date.now())).toLocaleDateString('pl-PL')}</td>

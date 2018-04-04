@@ -32,8 +32,8 @@ class Survey extends React.PureComponent {
         pzuAuto: false,
         stale: false,
         cesja: false,
-        'suwak.Komfort': offers[0].price,
-        'suwak.Premium': offers[1].price,
+        [`suwak.${offers[0].label}`]: offers[0].price,
+        [`suwak.${offers[1].label}`]: offers[1].price,
         pakiet: offers[0].id
       }
 
@@ -99,7 +99,7 @@ class Survey extends React.PureComponent {
   }
 
   getAdditionalItems = (name, offers, value) => {
-    const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
+    const offer = name === `suwak.${offers[0].label}` ? offers[0] : offers[1]
     const { label, min, max } = offer
     const delta = (max - min) / 6
     const stale = find(offer.insurances, { name: `stale.${label}` })
@@ -131,7 +131,7 @@ class Survey extends React.PureComponent {
       additionalItems[`suwak.${label}`] = min + delta * 2
     }
     if (value <= min + delta * 2) {
-      additionalItems[`dodatkowa.${label}`] = label === 'Komfort' ? '2 500 PLN' : '5 000 PLN'
+      additionalItems[`dodatkowa.${label}`] = label === offers[0].label ? '2 500 PLN' : '5 000 PLN'
       additionalItems[`suwak.${label}`] = min + delta
     }
     if (value <= min + delta) {
@@ -143,7 +143,7 @@ class Survey extends React.PureComponent {
   }
 
   getAdjustedSliderValue = (name, offers, answers) => {
-    const offer = /Komfort$/.test(name) ? offers[0] : offers[1]
+    const offer = name === `suwak.${offers[0].label}` ? offers[0] : offers[1]
     const { label, min, max } = offer
     const delta = (max - min) / 6
     const stale = find(offer.insurances, { name: `stale.${label}` })

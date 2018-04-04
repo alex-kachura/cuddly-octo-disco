@@ -51,7 +51,7 @@
   }
 
   &__section {
-    padding: $global-padding;
+    padding: 20px $global-padding;
     border: 1px solid $grey-light-2;
 
     & + & {
@@ -82,13 +82,19 @@
     &__header {
       margin-bottom: 30px;
 
-      h3 .svg-inline--fa {
-        font-size: 23px;
+      h3 {
+        .svg-inline--fa {
+          font-size: 23px;
+        }
+        .i.icon-user {
+          width: 22px;
+          height: 22px;
+          background-size: 22px;
+        }
       }
       h3, a {
         display: inline-block;
       }
-
       a {
         margin-left: 10px;
       }
@@ -150,6 +156,7 @@
         }
 
         input {
+          font-size: 12px;
           width: 110px;
           height: 25px;
           border-color: $grey-light-2;
@@ -229,7 +236,7 @@
   }
 
   &__suggestions {
-    margin: 45px 0 45px 35px;
+    margin: 45px 0 45px $global-padding;
     width: 100%;
 
     h6 {
