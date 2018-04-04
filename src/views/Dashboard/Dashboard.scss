@@ -3,20 +3,19 @@
 .dashboard {
   display: flex;
   justify-content: space-between;
-
   height: 100%;
 
   &__table-wrap {
     flex-grow: 1;
-
-    margin: 20px;
+    margin: 18px $global-padding;
 
     .table {
       width: 100%;
+      height: calc(100% - 82px + 20px);
       text-align: left;
-      line-height: 30px;
+      line-height: 29px;
 
-      &, tr {
+      tr {
         border: 1px solid $grey-light-2;
       }
 
@@ -49,7 +48,6 @@
       &__caption {
         display: flex;
         justify-content: space-between;
-
         margin: 15px 20px;
 
         .svg-inline--fa {
@@ -73,13 +71,16 @@
       &__body {
         font-size: 14px;
         color: $grey-dark;
+
+        &__row {
+          height: 50px;
+        }
       }
     }
   }
 
   .google-map {
     flex-basis: 600px;
-
     margin: 20px 20px 20px 0;
     padding-top: 55px;
   }

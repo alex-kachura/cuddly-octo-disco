@@ -110,7 +110,6 @@ class Dashboard extends React.PureComponent {
                         <option value={1000000}>> 1 000 000 PLN</option>
                         <option value={3000000}>> 3 000 000 PLN</option>
                         <option value={5000000}>> 5 000 000 PLN</option>
-                        <option value={7000000}>> 7 000 000 PLN</option>
                       </select>
                     </label>
                   </div>
@@ -131,7 +130,8 @@ class Dashboard extends React.PureComponent {
             <tbody className="table__body">
               {
                 entries.map(entry => (
-                  <tr key={entry.id} onClick={() => this.toEntryDetails(entry.id)}>
+                  <tr key={entry.id} onClick={() => this.toEntryDetails(entry.id)}
+                      className="table__body__row">
                     <td>{entry.id}</td>
                     <td>
                       {
@@ -149,6 +149,7 @@ class Dashboard extends React.PureComponent {
                   </tr>
                 ))
               }
+              <tr key="just-a-filler"><td colSpan="8" /></tr>
             </tbody>
           </table>
         </div>
