@@ -1,22 +1,28 @@
 # PZU Dom PoC - Frontend
 
-### Prerequisites
+## Prerequisites
 
-You need node.js installed. 
+NodeJS needs to be installed. Consult https://nodejs.org/en/download/package-manager/
 
-Please consult https://nodejs.org/en/download/package-manager/
-
-### Installation of frontend dependencies
+## Installation
 ```sh
 npm install
 ```
+or
+```sh
+yarn
+```
 
-### Running frontend
+## Running
 
 ```sh
 npm start
 ```
+or
+```sh
+yarn start
+```
 
-### Configuring frontend
+## Configuring
 
-In `src/config.js` file you can set things like API keys.
+In `src/config.js` you can set things like API keys etc.
