@@ -15,23 +15,24 @@
       font-family: Tahoma, sans-serif;
       font-size: 14px;
       line-height: 17px;
-      margin-right: 20px;
+      margin-right: 15px;
       color: $blue-dark;
     }
 
     .button-toggle {
       font-family: Tahoma, sans-serif;
       font-size: 14px;
-      line-height: 17px;
-      height: 32px;
-      padding: 5px 20px;
-      color: $blue-dark;
-      border: 1px solid $grey-light-1;
       outline: none;
+      border: 1px solid $grey-light-1;
+      padding: 5px 20px;
+      width: 128px;
+      height: 30px;
+      line-height: 16px;
+      color: $blue-dark;
       cursor: pointer;
 
       &:hover {
-        background-color: $grey-light-1;
+        background-color: $grey-light-2;
       }
 
       &.active {
